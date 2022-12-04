@@ -1,8 +1,15 @@
+@font-face {
+  font-family: "Alef";
+  src: url("./font/Alef-Bold.ttf");
+}
 .App {
   position: absolute;
   height: 100vh;
   width: 100vw;
   text-align: center;
+  color: white;
+  font-family:'Alef';
+  font-weight: 700;
   background: linear-gradient(180deg, #8E54E9 0%, #4776E6 100%);
 }
 
