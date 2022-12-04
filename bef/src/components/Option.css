@@ -6,6 +6,7 @@ label {
     font-family: "Inter";
     font-size: 20px;
     padding: 20px 140px;
+    margin-top: 15px;
     box-sizing: border-box;
     border: 1px solid white;
 }

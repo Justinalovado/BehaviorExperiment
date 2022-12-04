@@ -25,7 +25,6 @@
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  justify-content: space-evenly;
   height: 60%;
   font-weight: 200;
 }
@@ -34,4 +33,25 @@
   margin: 0 auto;
   background: linear-gradient(95.14deg, rgba(0, 159, 255, 0.65) 26.78%, rgba(236, 47, 75, 0.65) 82.67%);
   padding: 20px 120px;
+  margin-top: 15px;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.cancelButton {
+  margin: 30px auto 0 auto;
+  padding: 20px 190px;
+  background: #fff;
+  color: #000;
+}
+
+.nextButton {
+  margin: 30px auto 0 auto;
+  padding: 20px 190px;
+  background: #2574DF;
+  color: white;
 }
