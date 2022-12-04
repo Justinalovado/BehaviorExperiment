@@ -2,6 +2,12 @@
   font-family: "Alef";
   src: url("./font/Alef-Bold.ttf");
 }
+
+@font-face {
+  font-family: "Inter";
+  src: url("./font/Inter-Regular.ttf");
+}
+
 .App {
   display: flex;
   flex-direction: column;
@@ -15,12 +21,13 @@
   background: linear-gradient(180deg, #8E54E9 0%, #4776E6 100%);
 }
 
-.button-container {
+.option-container {
   display: flex;
   flex-direction: column;
   margin: 0 auto;
   justify-content: space-evenly;
   height: 60%;
+  font-weight: 200;
 }
 
 .addButton {
