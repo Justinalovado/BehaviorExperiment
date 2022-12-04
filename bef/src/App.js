@@ -1,11 +1,10 @@
 import './App.css';
-import { useState } from 'react';
+
+import Question from './components/Question';
 function App() {
-  const questions = ["What is the activity"]
-  const [question, setQuestion] = useState("What is the activity?");
   return (
     <div className="App">
-      <h1>{question}</h1>
+      <Question />
     </div>
   );
 }
