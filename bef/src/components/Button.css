@@ -8,4 +8,5 @@ button {
     font-size: 20px;
     padding: 20px 102px;
     box-sizing: border-box;
+    border: 1px solid white;
 }
