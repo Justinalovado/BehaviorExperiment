@@ -1,27 +1,12 @@
-import Question from "./components/Question";
-import Button from "./components/Button";
-import Option from "./components/Option";
-import "./App.css";
+import React from 'react'
+import EventPlanning from './pages/EventPlanning'
 
 function App() {
   return (
-    <div className="App">
-      <Question />
-      <div className="option-container">
-        <Option />
-        <Option />
-        <Option />
-        <Option />
-        <Option />
-        <Button className="addButton" text={"Add New +"} />
-      </div>
-
-      <div className="button-container">
-        <Button className="nextButton" text={"Next ->"} />
-        <Button className="cancelButton" text={"Cancel"} />
-      </div>
+    <div>
+        <EventPlanning />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

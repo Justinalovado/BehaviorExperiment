@@ -1,14 +1,14 @@
 @font-face {
   font-family: "Alef";
-  src: url("./font/Alef-Bold.ttf");
+  src: url("../font/Alef-Bold.ttf");
 }
 
 @font-face {
   font-family: "Inter";
-  src: url("./font/Inter-Regular.ttf");
+  src: url("../font/Inter-Regular.ttf");
 }
 
-.App {
+.EventPlanning {
   display: flex;
   flex-direction: column;
   position: absolute;
