@@ -1,0 +1,52 @@
+.overlay {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.answerBox {
+    margin: 30px auto 0 auto;
+    width: 299px;
+    height: 47px;
+    border-radius: 20px;
+    border: 0;
+    background: #FFFFFF;
+    box-shadow: inset 0px 0px 4px 1px rgb(0 0 0 / 50%);
+    text-align: center;
+    font-family: "Inter";
+    font-size: 20px;
+}
+
+.modalContainer {
+    display: flex;
+    flex-direction: column;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #000;
+    background: white;
+    border-radius: 38px;
+    padding: 20px;
+    width: 500px;
+    height: 300px;
+}
+
+.saveBtn {
+    margin-top: 55px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.header > h1 {
+    margin: 30px auto;
+}
+
+.closeBtn {
+    cursor: pointer;
+}
