@@ -7,7 +7,7 @@ function Option({ text, className="" }) {
         if (text) {
             setOption(text);
         }
-    }, []);
+    }, [text]);
     
     return (
         <label className={className}>{option}</label>
