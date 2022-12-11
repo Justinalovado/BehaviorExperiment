@@ -1,9 +1,7 @@
 import React from "react";
-import useQuestion from "../hooks/useQuestion";
 import "./Question.css";
 
-function Question() {
-  const question = useQuestion();
+function Question({ question }) {
   return (
     <div className="question">
       <h1>{question}</h1>

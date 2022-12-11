@@ -43,13 +43,13 @@
 }
 
 .cancelButton {
-  margin: 30px auto 0 auto;
+  margin: 30px auto 25px auto;
   padding: 20px 190px;
   background: #fff;
   color: #000;
 }
 
-.nextButton {
+.nextButton, .prevButton {
   margin: 30px auto 0 auto;
   padding: 20px 190px;
   background: #2574DF;
