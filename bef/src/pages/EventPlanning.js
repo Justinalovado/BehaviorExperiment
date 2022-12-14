@@ -23,6 +23,19 @@ function EventPlanning() {
   const [openModal, setOpenModal] = useState(false);
   const [option, setOption] = useState("");
   
+  useEffect(() => {
+    //save idx
+    const idx = JSON.parse(localStorage.getItem("idx"));
+    if (idx) {
+      setIdx(idx);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (idx < 3) {
+      localStorage.setItem("idx", JSON.stringify(idx));
+    }
+  }, [idx]);
 
   return (
     <div className="EventPlanning">

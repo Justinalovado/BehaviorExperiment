@@ -2,8 +2,8 @@ import React from "react";
 import { useState, useEffect } from "react";
 
 function useOption() {
-    // ----------------localStorage part needs fixing--------------------- //
-    const [optionList, setOptionList] = useState([]);
+  const [optionList, setOptionList] = useState([]);
+    // ----------------localStorage part--------------------- //
     useEffect(() => {
         const optionList = JSON.parse(localStorage.getItem("optionList"));
         if (optionList) {
@@ -12,9 +12,12 @@ function useOption() {
       }, []);
     
     useEffect(() => {
-    localStorage.setItem("optionList", JSON.stringify(optionList));
+      if (optionList.length !== 0) {
+        localStorage.setItem("optionList", JSON.stringify(optionList));
+      }
     }, [optionList]);
-    // ------------------------------------- //
+    
+    // ------------------------------------------------------ //
     const addOption = (option, idx) => {
         setOptionList([...optionList, {idx: idx, option: option}]);
     }
