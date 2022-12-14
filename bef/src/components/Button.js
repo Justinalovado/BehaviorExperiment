@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./Button.css";
 
-function Button({ text, className="" }) {
+function Button({ text, className="", handleClick }) {
     const [buttonText, setButtonText] = useState("Click me, please"); 
     useEffect(() => {
         if (text) {
@@ -10,7 +10,7 @@ function Button({ text, className="" }) {
     }, []);
     
     return (
-        <button className={className}>{buttonText}</button>
+        <button className={className} onClick={handleClick}>{buttonText}</button>
     );
 }
 

@@ -2,6 +2,10 @@
   font-family: "Alef";
   src: url("./font/Alef-Bold.ttf");
 }
+@font-face{
+  font-family: "BIZ-Gothic";
+  src: url("./font/BIZUDPGothic-Bold.ttf");
+}
 .App {
   display: flex;
   flex-direction: column;
@@ -13,6 +17,17 @@
   font-family:'Alef';
   font-weight: 700;
   background: linear-gradient(180deg, #8E54E9 0%, #4776E6 100%);
+  
+}
+.app{
+  height: 100%;
+  padding-left: 10%;
+  padding-right: 10%;
+  background: linear-gradient(180deg, #8E54E9 0%, #4776E6 100%);
+}
+
+html,body, #root{
+  height: 100%;
 }
 
 .button-container {

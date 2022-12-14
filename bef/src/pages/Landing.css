@@ -1,0 +1,45 @@
+.choice-box{
+    position: relative;
+    display: flex;
+    top: 25%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    height: 50%;
+    row-gap: 10px;
+}
+
+.login-wrap{
+    width: 100%;
+}
+
+.login-btn{
+    font-family: 'BIZ-Gothic';
+    background-color: rgba(0, 159, 255, 0.65);
+    color: white;
+    border: 0;
+    border-radius: 50px;
+    font-size: large;
+    width: 100%;
+    padding: 13px 20px;
+}
+.login-btn:hover{
+    background-color: rgba(0, 124, 201, 0.65);
+}
+
+.signup-wrap{
+    width: 100%;
+}
+.signup-btn{
+    font-family: 'BIZ-Gothic';
+    background-color: white;
+    border: 3;
+    border-radius: 50px;
+    font-size: large;
+    width: 100%;
+    padding: 13px 20px;
+}
+.signup-btn:hover{
+    background-color: rgb(188, 188, 188);
+}
