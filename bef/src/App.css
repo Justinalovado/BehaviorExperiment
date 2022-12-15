@@ -6,6 +6,7 @@
   font-family: "BIZ-Gothic";
   src: url("./font/BIZUDPGothic-Bold.ttf");
 }
+
 .App {
   display: flex;
   flex-direction: column;
