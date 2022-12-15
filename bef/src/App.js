@@ -22,7 +22,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Landing />} />
-          <Route path="/error" element={<h1>Page 404 Not found</h1>} />
+          <Route path="*" element={<h1 className="err404">Page 404 Not found</h1>} />
         </Routes>
       </Router>
     </div>

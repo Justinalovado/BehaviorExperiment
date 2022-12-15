@@ -1,10 +1,12 @@
 import React from 'react';
 import { RouterProvider } from 'react-router-dom';
+import { useState } from 'react';
 import './Landing.css';
 
 
 function Landing() {
-	
+	const [inLogin, setInLogin] = useState(0);
+  
   return (
     <div className='choice-box'>
 			<a href='/error' className='login-wrap'>

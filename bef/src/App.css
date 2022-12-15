@@ -24,6 +24,7 @@
   padding-left: 10%;
   padding-right: 10%;
   background: linear-gradient(180deg, #8E54E9 0%, #4776E6 100%);
+  text-align: center;
 }
 
 html,body, #root{
@@ -42,4 +43,12 @@ html,body, #root{
   margin: 0 auto;
   background: linear-gradient(95.14deg, rgba(0, 159, 255, 0.65) 26.78%, rgba(236, 47, 75, 0.65) 82.67%);
   padding: 20px 120px;
+}
+
+.err404{
+  justify-content: center;
+  margin-top: 0;
+  color: white;
+  font-family: 'BIZ-Gothic';
+  padding-top: 40%;
 }
