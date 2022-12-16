@@ -58,7 +58,10 @@ function EventPlanning() {
         <Button
           className="addButton"
           text="Add New +"
-          onClick={() => setOpenModal(true)}
+          onClick={() => {
+            setOpenModal(true)
+            setOption("");
+          }}
         />
       </div>
 

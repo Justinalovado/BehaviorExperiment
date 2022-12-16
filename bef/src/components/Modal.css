@@ -32,6 +32,7 @@
     padding: 20px;
     width: 500px;
     height: 300px;
+    z-index: 7;
 }
 
 .saveBtn {

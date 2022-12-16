@@ -10,12 +10,16 @@ function Modal({ open, onClose, option, onTextChange, addOption, idx }) {
       <div className="modalContainer">
         <div className="header">
           <h1>Type your answer here</h1>
-          <p className="closeBtn" onClick={onClose}>X</p>
+          <p className="closeBtn" onClick={() => {
+            onClose();
+            // onTextChange("");
+          }}>X</p>
         </div>
         <div className="content">
           <input className="answerBox" type="text" onChange={(e) => onTextChange(e.target.value)}/>
           <Button className="saveBtn" text="Save" onClick={() => {
               addOption(option, idx);
+              // onTextChange("");
               onClose();
             }} />
         </div>
