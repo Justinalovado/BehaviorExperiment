@@ -20,12 +20,6 @@ function Landing() {
 
   return (
     <div className='choice-box'>
-			{/* <a href='/error' className='login-wrap'>
-        <button className='login-btn'>Login</button>
-      </a>
-      <a href='/error' className='signup-wrap'>
-        <button className='signup-btn'>Sign up</button>
-      </a> */}
       <LoginForm showLogin={inLogin} setShowLogin={setInLogin}/>
       <button className='login-btn' onClick={handleLogin}>
         Login

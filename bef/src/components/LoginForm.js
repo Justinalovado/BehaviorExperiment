@@ -11,9 +11,9 @@ function LoginForm({showLogin, setShowLogin}) {
     return (
       <div className={`overlay-${showLogin?"show":"hide"}`}>
           <form className="form-container">
-							<label for="email">Email:</label>
+							<label for="email" className="label">Email:</label>
 							<input type="text" name="email" id="email"/>
-							<label for="psw">Password:</label>
+							<label for="psw" className="label">Password:</label>
 							<input type="password" name="psw" id="psw"/>
 							<input type="submit" className='login-submit-btn' name="Login" value="Login" onClick={handleSubmit}/>
               <input type="button" className='close-btn' name="Close" value="Cancel" onClick={handleClose}/>
