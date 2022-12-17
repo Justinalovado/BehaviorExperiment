@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import trash from "../images/Trash.png";
 import "./Option.css";
 
-function Option({ text, className="" }) {
+// text means option text
+function Option({ text, className="", removeOption, optionIdx }) {
     const [option, setOption] = useState("Option"); 
     useEffect(() => {
         if (text) {
@@ -11,9 +12,11 @@ function Option({ text, className="" }) {
     }, [text]);
     
     return (
-        <div className={className} id="label">
+        <div className={`${className} option`} id={optionIdx}>
             <label>{option}</label>
-            {/* <img src={trash} alt="delete" /> */}
+            <img src={trash} alt="delete" onClick={(e) => {
+                removeOption(e.target.parentNode.id);
+            }} />
         </div>
     );
 }

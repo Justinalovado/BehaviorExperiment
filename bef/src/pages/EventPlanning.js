@@ -7,35 +7,45 @@ import Option from "../components/Option";
 import Modal from "../components/Modal";
 import "./EventPlanning.css";
 
-// optionList will be sent at the end as the response of the client
-// idx is the index of the question
+// optionList will be sent at the end as the response of the client (backend)
+// questionIdx is the index of the question
 // option is the answer to the question
-// addOption is a function that adds the answer to the optionList
+// addOption is a function that adds the answer to the optionList 
 // removeOption is a function that removes the answer from the optionList
 // openModal is a boolean that determines whether the modal is open or not
 // setOpenModal is a function that sets the openModal to true or false
 // onTextChange is a function that sets the option to the text that is typed in the modal
+// optionIdx is the unique index/key of the answer
+// generateKey is a function that generates a unique key for the answer
+
+// useEffect is a function that is called when the component is mounted
+// useEffect is called when the questionIdx is changed
+// useEffect is called when the optionList is changed
 
 function EventPlanning() {
-  const [idx, setIdx] = useState(0);
-  const question = useQuestion(idx);
+  const [questionIdx, setQuestionIdx] = useState(0);
+  const question = useQuestion(questionIdx);
   const { optionList, setOptionList, addOption, removeOption } = useOption();
   const [openModal, setOpenModal] = useState(false);
   const [option, setOption] = useState("");
   
+  const generateKey = (pre) => {
+    return `${ pre }_${ new Date().getTime() }`;
+  }
+
   useEffect(() => {
     //save idx
     const idx = JSON.parse(localStorage.getItem("idx"));
     if (idx) {
-      setIdx(idx);
+      setQuestionIdx(idx);
     }
   }, []);
 
   useEffect(() => {
-    if (idx < 3) {
-      localStorage.setItem("idx", JSON.stringify(idx));
+    if (questionIdx < 3) {
+      localStorage.setItem("idx", JSON.stringify(questionIdx));
     }
-  }, [idx]);
+  }, [questionIdx]);
 
   return (
     <div className="EventPlanning">
@@ -46,13 +56,16 @@ function EventPlanning() {
         option={option}
         onTextChange={(text) => setOption(text)}
         addOption={addOption}
-        idx={idx}
+        questionIdx={questionIdx}
+        optionIdx={generateKey(option)}
       />
       <div className="option-container"> 
       {/* filter() for getting answers to the corresponding questions */}
-        {optionList.filter(item => item.idx === idx).map((item) => (
-          <Option key={item.option}
+        {optionList.filter(item => item.questionIdx === questionIdx).map((item) => (
+          <Option key={item.optionIdx}
             text={item.option}
+            removeOption={removeOption}
+            optionIdx={item.optionIdx}
             />
         ))}
         <Button
@@ -70,19 +83,19 @@ function EventPlanning() {
           className="nextButton"
           text={"Next ->"}
           onClick={() => {
-            if (idx < 2) {
-              setIdx(idx + 1);
+            if (questionIdx < 2) {
+              setQuestionIdx(questionIdx + 1);
             }
           }}
         />
 
-        {idx > 0 && (
+        {questionIdx > 0 && (
           <Button
             className="prevButton"
             text={"<- Prev"}
             onClick={() => {
-              if (idx > 0) {
-                setIdx(idx - 1);
+              if (questionIdx > 0) {
+                setQuestionIdx(questionIdx - 1);
               }
             }}
           />
