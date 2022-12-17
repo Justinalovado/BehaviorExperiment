@@ -27,7 +27,7 @@ function useOption() {
   const removeOption = (currentIdx) => {
     const newList = optionList.filter((item) => item.optionIdx !== currentIdx);
     setOptionList(optionList.filter((item) => item.optionIdx !== currentIdx));
-    localStorage.setItem("optionList", JSON.stringify(newList));
+    localStorage.setItem("optionList", JSON.stringify(newList)); // update localStorage even when optionList has one item only
   };
 
   return { optionList, setOptionList, addOption, removeOption };
