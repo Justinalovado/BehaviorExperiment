@@ -27,6 +27,7 @@ function EventPlanning() {
   const question = useQuestion(questionIdx);
   const { optionList, setOptionList, addOption, removeOption } = useOption();
   const [openModal, setOpenModal] = useState(false);
+  const [finish, setFinish] = useState(false);
   const [option, setOption] = useState("");
   
   const generateKey = (pre) => {
@@ -40,12 +41,31 @@ function EventPlanning() {
       setQuestionIdx(idx);
     }
   }, []);
-
+  
   useEffect(() => {
     if (questionIdx < 3) {
       localStorage.setItem("idx", JSON.stringify(questionIdx));
     }
   }, [questionIdx]);
+
+  // finish is a boolean that determines whether the client has finished the activity or not
+  // if finish is true, the client will see the finishMessage
+  // if finish is false, the client will see the questions and the answers
+  if (finish) {
+    return (
+      <div className="EventPlanning">
+        <div className="finishMessage" style={{margin: "100px auto"}}>
+          <span style={{fontSize: "1.4em"}}>Great job!</span>
+          <p>We have saved your activity</p>
+        </div>
+        <div className="option-container">
+          <span style={{fontSize: "2em"}}><p>Would you like to:</p></span>
+          <Button className="addButton" text="Start Activity!" />
+          <Button className="cancelButton" text="Back to Menu" style={{padding: "20px 121px"}}/>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="EventPlanning">
@@ -61,7 +81,7 @@ function EventPlanning() {
       />
       <div className="option-container"> 
       {/* filter() for getting answers to the corresponding questions */}
-        {optionList.filter(item => item.questionIdx === questionIdx).map((item) => (
+        { optionList.filter(item => item.questionIdx === questionIdx).map((item) => (
           <Option key={item.optionIdx}
             text={item.option}
             removeOption={removeOption}
@@ -80,11 +100,19 @@ function EventPlanning() {
 
       <div className="button-container">
         <Button
-          className="nextButton"
-          text={"Next ->"}
+          className={questionIdx !== 2 ? "nextButton" : "saveButton"}
+          text={questionIdx !== 2 ? "Next ->" : "Save"}
           onClick={() => {
             if (questionIdx < 2) {
               setQuestionIdx(questionIdx + 1);
+            }
+            else {
+              // save optionList to the backend
+              // optionList is the response of the client
+              // setQuestionIdx(0) is for resetting the questionIdx
+              setFinish(true);
+              console.log(optionList);
+              localStorage.clear()
             }
           }}
         />

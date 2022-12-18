@@ -21,6 +21,7 @@
   background: linear-gradient(180deg, #8E54E9 0%, #4776E6 100%);
 }
 
+
 .option-container {
   display: flex;
   flex-direction: column;
@@ -49,9 +50,28 @@
   color: #000;
 }
 
+.backButton {
+  margin: 30px auto 25px auto;
+  padding: 20px 120px;
+  background: #fff;
+  color: #000;
+}
+
 .nextButton, .prevButton {
   margin: 30px auto 0 auto;
   padding: 20px 190px;
   background: #2574DF;
   color: white;
+}
+
+.saveButton {
+  margin: 30px auto 0 auto;
+  padding: 20px 200px;
+  background: #2574DF;
+  color: white;
+}
+
+.finishMessage {
+  margin: 0 auto;
+  font-size: 2em;
 }
