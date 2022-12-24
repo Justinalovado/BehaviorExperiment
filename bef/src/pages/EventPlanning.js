@@ -13,10 +13,12 @@ import "./EventPlanning.css";
 // addOption is a function that adds the answer to the optionList 
 // removeOption is a function that removes the answer from the optionList
 // openModal is a boolean that determines whether the modal is open or not
-// setOpenModal is a function that sets the openModal to true or false
+// setOpenModal is a function that sets the openModalf to true or false
 // onTextChange is a function that sets the option to the text that is typed in the modal
 // optionIdx is the unique index/key of the answer
 // generateKey is a function that generates a unique key for the answer
+// useOption is a custom hook that is used to get the optionList, setOptionList, addOption, and removeOption
+// useQuestion is a custom hook that is used to get the question
 
 // useEffect is a function that is called when the component is mounted
 // useEffect is called when the questionIdx is changed
@@ -32,6 +34,14 @@ function EventPlanning() {
   
   const generateKey = (pre) => {
     return `${ pre }_${ new Date().getTime() }`;
+  }
+  const btnStyle = {
+    '@media (max-width: 463px)': {
+      padding: "20px 101px",
+    },
+    '@media (min-width: 464px)': {
+      padding: "20px 121px",
+    }
   }
 
   useEffect(() => {
@@ -54,14 +64,14 @@ function EventPlanning() {
   if (finish) {
     return (
       <div className="EventPlanning">
-        <div className="finishMessage" style={{margin: "100px auto"}}>
+        <div className="finishMessage">
           <span style={{fontSize: "1.4em"}}>Great job!</span>
           <p>We have saved your activity</p>
         </div>
         <div className="option-container">
           <span style={{fontSize: "2em"}}><p>Would you like to:</p></span>
           <Button className="addButton" text="Start Activity!" />
-          <Button className="cancelButton" text="Back to Menu" style={{padding: "20px 121px"}}/>
+          <Button className="backToMenuButton" text="Back to Menu"/>
         </div>
       </div>
     );

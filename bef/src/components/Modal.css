@@ -36,6 +36,13 @@
     z-index: 7;
 }
 
+@media screen and (max-width: 500px) {
+    .modalContainer {
+        width: 90%;
+        height: 90%;
+    }
+}
+
 .saveBtn {
     margin-top: 40px;
 }

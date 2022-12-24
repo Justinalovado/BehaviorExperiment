@@ -16,11 +16,10 @@
   width: 100vw;
   text-align: center;
   color: white;
-  font-family:'Alef';
+  font-family: "Alef";
   font-weight: 700;
-  background: linear-gradient(180deg, #8E54E9 0%, #4776E6 100%);
+  background: linear-gradient(180deg, #8e54e9 0%, #4776e6 100%);
 }
-
 
 .option-container {
   display: flex;
@@ -32,7 +31,11 @@
 
 .addButton {
   margin: 0 auto;
-  background: linear-gradient(95.14deg, rgba(0, 159, 255, 0.65) 26.78%, rgba(236, 47, 75, 0.65) 82.67%);
+  background: linear-gradient(
+    95.14deg,
+    rgba(0, 159, 255, 0.65) 26.78%,
+    rgba(236, 47, 75, 0.65) 82.67%
+  );
   padding: 20px 120px;
   margin-top: 15px;
 }
@@ -57,21 +60,60 @@
   color: #000;
 }
 
-.nextButton, .prevButton {
+.nextButton,
+.prevButton {
   margin: 30px auto 0 auto;
   padding: 20px 190px;
-  background: #2574DF;
+  background: #2574df;
   color: white;
 }
 
 .saveButton {
   margin: 30px auto 0 auto;
   padding: 20px 200px;
-  background: #2574DF;
+  background: #2574df;
   color: white;
 }
 
 .finishMessage {
   margin: 0 auto;
   font-size: 2em;
+  margin: 100px auto;
+}
+
+.backToMenuButton {
+  margin: 30px auto 0 auto;
+  padding: 20px 120px;
+  background: #fff;
+  color: #000;
+}
+
+@media (max-width: 500px) {
+  .cancelButton {
+    margin-top: 15px;
+    padding: 15px 140px;
+  }
+  .addButton {
+    padding: 15px 100px;
+  }
+  .backToMenuButton {
+    padding: 15px 100px;
+  }
+  .finishMessage {
+    margin: 60px auto;
+  }
+  .nextButton,
+  .prevButton{  /* need fixing*/
+    margin-top: 15px;
+    padding: 15px 140px;  
+  }
+  .saveButton {
+    padding: 15px 150px;
+  }
+}
+
+@media (max-width: 350px) {
+  .cancelButton {
+    padding: 20px 120px;
+  }
 }
