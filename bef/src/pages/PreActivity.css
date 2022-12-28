@@ -1,0 +1,14 @@
+div.container{
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(180deg, #4776e6 0%, #01C3FD 100%);
+}
+
+.slide-container{
+    
+}
