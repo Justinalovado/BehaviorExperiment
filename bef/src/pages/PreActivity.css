@@ -10,5 +10,11 @@ div.container{
 }
 
 .slide-container{
-    
+    font-family: "Alef";
+    color: white;
+}
+.met-questions{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

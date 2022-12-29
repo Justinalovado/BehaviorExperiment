@@ -9,6 +9,7 @@
     flex-direction: column;
     width: 15em;
     font-family: 'Advent Pro';
+    color: black;
 }
 
 .pointer-track{
@@ -23,6 +24,7 @@
     transform-origin: center center;
     transform: translateX(-20%);
     display: block;
+
 }
 
 .slider-track{

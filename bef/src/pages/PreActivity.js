@@ -25,17 +25,28 @@ function PreActivity() {
 
 	const section = [
 		(
-			<div>
-				<div>Q1</div>
+			<div className='met-questions'>
+				<div>How anxious are you?</div>
 				<Slider curMetric="met-1" Metrics={Metrics} setMetrics={setMetrics} />
 			</div>
 		),(
-			<div>
-				<div>Q2</div>
+			<div className='met-questions'>
+				<div>How strongly do you feel:</div>
+				<div>Your worst fear will happen?</div>
 				<Slider curMetric="met-2" Metrics={Metrics} setMetrics={setMetrics} />
+				<div>You will be judged negatively?</div>
 				<Slider curMetric="met-3" Metrics={Metrics} setMetrics={setMetrics} />
+				<div>You will make a bad impression during the activity?</div>
+				<Slider curMetric="met-4" Metrics={Metrics} setMetrics={setMetrics} />
+				<div>You will appear anxious during the activity?</div>
+				<Slider curMetric="met-5" Metrics={Metrics} setMetrics={setMetrics} />
 			</div>
-		),
+		),(
+			<div className='met-questions'>
+				<div>How bad do you think the outcome of the activity will be?</div>
+				<Slider curMetric="met-6" Metrics={Metrics} setMetrics={setMetrics} />
+			</div>
+		)
 
 	]
 
