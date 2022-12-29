@@ -1,0 +1,55 @@
+@font-face {
+    font-family: "Advent Pro";
+    src: url("../font/AdventPro-Medium.ttf");
+}
+
+.slider{
+    position:relative;
+    display: flex;
+    flex-direction: column;
+    width: 15em;
+    font-family: 'Advent Pro';
+}
+
+.pointer-track{
+
+}
+
+.pointer-box{
+    width: 1.5em;
+    text-align: center;
+    background-color: #ffffff;
+    border-radius: 5px;
+    transform-origin: center center;
+    transform: translateX(-20%);
+    display: block;
+}
+
+.slider-track{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    align-self: center;
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    height: 2px;
+    outline: none;
+    border-radius: 2px;
+}
+
+.slider-track::-webkit-slider-thumb{
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 1em;
+    height:1.5em;
+    border-radius: 1em;
+    background-color: #d3ebff;
+}
+
+.slider .label-container{
+    width: 102%;
+    align-self: center;
+    position:relative;
+    display: flex;
+    justify-content: space-between;
+}
