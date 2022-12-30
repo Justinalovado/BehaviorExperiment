@@ -41,8 +41,11 @@
 
 .met-questions h2{
     max-width: 380px;
+    margin-block-end: 1.5em;
 }
 
 .met-questions p{
     max-width: 280px;
+    margin-block-start: 0;
+    margin-block-end: 0;
 }
