@@ -1,4 +1,4 @@
-div.container{
+.pre-act-container{
     display: flex;
     position: relative;
     justify-content: center;
@@ -12,9 +12,37 @@ div.container{
 .slide-container{
     font-family: "Alef";
     color: white;
+    margin-bottom: 40%;
 }
+
 .met-questions{
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
+}
+
+.pre-act-container .btn-container{
+    position: absolute;
+    bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+
+.pre-act-container .btn-container button{
+    margin: 25px auto 0 auto;
+    width: 85vw;
+    max-width: 450px;
+}
+.pre-act-container .btn-container button:hover{
+    background-color: rgba(0, 157, 255, 0.72);
+}
+
+.met-questions h2{
+    max-width: 380px;
+}
+
+.met-questions p{
+    max-width: 280px;
 }

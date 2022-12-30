@@ -48,6 +48,10 @@
     background-color: #d3ebff;
 }
 
+.slider-track::-webkit-slider-thumb:active{
+    background-color: #a7bbcb;
+}
+
 .slider .label-container{
     width: 102%;
     align-self: center;
