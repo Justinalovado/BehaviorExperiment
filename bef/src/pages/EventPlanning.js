@@ -35,14 +35,14 @@ function EventPlanning() {
   const generateKey = (pre) => {
     return `${ pre }_${ new Date().getTime() }`;
   }
-  const btnStyle = {
-    '@media (max-width: 463px)': {
-      padding: "20px 101px",
-    },
-    '@media (min-width: 464px)': {
-      padding: "20px 121px",
-    }
-  }
+  // const btnStyle = {
+  //   '@media (max-width: 463px)': {
+  //     padding: "20px 101px",
+  //   },
+  //   '@media (min-width: 464px)': {
+  //     padding: "20px 121px",
+  //   }
+  // }
 
   useEffect(() => {
     //save idx
@@ -68,7 +68,7 @@ function EventPlanning() {
           <span style={{fontSize: "1.4em"}}>Great job!</span>
           <p>We have saved your activity</p>
         </div>
-        <div className="option-container">
+        <div className="option-container" style={{overflowY: "visible"}}>
           <span style={{fontSize: "2em"}}><p>Would you like to:</p></span>
           <Button className="addButton" text="Start Activity!" />
           <Button className="backToMenuButton" text="Back to Menu"/>
@@ -89,15 +89,18 @@ function EventPlanning() {
         questionIdx={questionIdx}
         optionIdx={generateKey(option)}
       />
-      <div className="option-container"> 
-      {/* filter() for getting answers to the corresponding questions */}
-        { optionList.filter(item => item.questionIdx === questionIdx).map((item) => (
-          <Option key={item.optionIdx}
-            text={item.option}
-            removeOption={removeOption}
-            optionIdx={item.optionIdx}
-            />
-        ))}
+
+      <div className="options">
+        <div className="option-container"> 
+        {/* filter() for getting answers to the corresponding questions */}
+          { optionList.filter(item => item.questionIdx === questionIdx).map((item) => (
+            <Option key={item.optionIdx}
+              text={item.option}
+              removeOption={removeOption}
+              optionIdx={item.optionIdx}
+              />
+          ))}
+        </div>
         <Button
           className="addButton"
           text="Add New +"

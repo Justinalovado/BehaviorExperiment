@@ -19,14 +19,26 @@
   font-family: "Alef";
   font-weight: 700;
   background: linear-gradient(180deg, #8e54e9 0%, #4776e6 100%);
+  /* justify-content: center; */
+}
+
+.EventPlanning:only-child {
+  justify-content: center;
+}
+
+.options {
+  margin: 0 auto;
+  min-height: 500px;
 }
 
 .option-container {
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  height: 60%;
   font-weight: 200;
+  overflow-y: auto;
+  height: auto;
+  max-height: 500px;
 }
 
 .addButton {
@@ -43,7 +55,7 @@
 .button-container {
   display: flex;
   flex-direction: column;
-  margin-top: 20px;
+  /* margin-top: 20px; */
 }
 
 .cancelButton {
@@ -88,7 +100,7 @@
   color: #000;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 600px) {
   .cancelButton {
     margin-top: 15px;
     padding: 15px 140px;
@@ -100,20 +112,88 @@
     padding: 15px 100px;
   }
   .finishMessage {
-    margin: 60px auto;
+    margin: 0px auto;
   }
   .nextButton,
-  .prevButton{  /* need fixing*/
+  .prevButton {
+    /* need fixing*/
     margin-top: 15px;
-    padding: 15px 140px;  
+    padding: 15px 140px;
   }
   .saveButton {
     padding: 15px 150px;
   }
+  .options {
+    min-height: 270px;
+  }
+  .option-container {
+    max-height: 180px;
+  }
+  /* .option is for .option component, .options is a div containing option-container and addButton */
+  .option {
+    padding: 15px 120px;
+  }
 }
 
-@media (max-width: 350px) {
+@media (max-width: 400px) {
+  .option {
+    padding: 15px 100px;
+  }
   .cancelButton {
-    padding: 20px 120px;
+    padding: 15px 120px;
+  }
+  .addButton {
+    padding: 15px 80px;
+  }
+  .backToMenuButton {
+    padding: 15px 80px;
+  }
+  .nextButton,
+  .prevButton {
+    padding: 15px 120px;
+  }
+  .saveButton {
+    padding: 15px 130px;
+  }
+}
+
+@media (max-width: 320px) {
+  .option {
+    padding: 15px 80px;
+  }
+  .cancelButton {
+    padding: 15px 100px;
+  }
+  .addButton {
+    padding: 15px 60px;
+  }
+  .backToMenuButton {
+    padding: 15px 60px;
+  }
+  .nextButton,
+  .prevButton {
+    padding: 15px 100px;
+  }
+  .saveButton {
+    padding: 15px 110px;
+  }
+}
+
+@media (max-width: 300px) and (max-height: 500px) {
+  .options {
+    min-height: 230px;
+  }
+  .option-container {
+    max-height: 130px;
+  }
+}
+
+/* iphone 5/SE or smaller*/
+@media (max-width: 500px) and (max-height: 600px) {
+  .options {
+    min-height: 150px;
+  }
+  .option-container {
+    max-height: 180px;
   }
 }
