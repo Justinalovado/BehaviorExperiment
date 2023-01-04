@@ -22,13 +22,12 @@
   /* justify-content: center; */
 }
 
-.EventPlanning:only-child {
-  justify-content: center;
-}
+
 
 .options {
   margin: 0 auto;
-  min-height: 500px;
+  height: 60%;
+  min-height: 200px;
 }
 
 .option-container {
@@ -128,6 +127,9 @@
   }
   .option-container {
     max-height: 180px;
+  }
+  .EventPlanning:only-child {
+    justify-content: center;
   }
   /* .option is for .option component, .options is a div containing option-container and addButton */
   .option {
