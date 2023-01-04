@@ -132,9 +132,6 @@
     justify-content: center;
   }
   /* .option is for .option component, .options is a div containing option-container and addButton */
-  .option {
-    padding: 15px 120px;
-  }
 }
 
 @media (max-width: 400px) {

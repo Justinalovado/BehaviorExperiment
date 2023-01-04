@@ -8,7 +8,7 @@
 
 .answerBox {
     margin: 30px auto 0 auto;
-    width: 299px;
+    width: 80%;
     height: 47px;
     border-radius: 20px;
     border: 0;
@@ -18,7 +18,10 @@
     font-family: "Inter";
     font-size: 20px;
 }
-
+.content {
+    display: flex;
+    flex-direction: column;
+}
 .modalContainer {
     display: flex;
     flex-direction: column;
@@ -36,16 +39,12 @@
     z-index: 7;
 }
 
-@media screen and (max-width: 500px) {
-    .modalContainer {
-        width: 90%;
-        height: 90%;
-    }
-}
-
 .saveBtn {
     margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
 }
+
 
 .header {
     display: flex;
@@ -59,3 +58,14 @@
 .closeBtn {
     cursor: pointer;
 }
+
+@media screen and (max-width: 600px) {
+    .modalContainer {
+        width: 75%;
+        height: 70%;
+    }
+    .saveBtn {
+        padding: 5% 30%;
+    }
+}
+    

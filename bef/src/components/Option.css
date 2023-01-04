@@ -26,3 +26,9 @@ img {
     right: 0;
     margin-right: 20px;
 }
+
+@media screen and (max-width: 600px) {
+    .option {
+        padding: 15px 120px;
+    }
+}
