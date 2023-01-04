@@ -37,7 +37,8 @@
   font-weight: 200;
   overflow-y: auto;
   height: auto;
-  max-height: 500px;
+  max-height: 80%;
+  align-items: center;
 }
 
 .addButton {
@@ -126,7 +127,7 @@
     min-height: 270px;
   }
   .option-container {
-    max-height: 180px;
+    max-height: 70%;
   }
   .EventPlanning:only-child {
     justify-content: center;
@@ -178,21 +179,22 @@
   }
 }
 
-@media (max-width: 300px) and (max-height: 500px) {
+/* @media (max-width: 300px) and (max-height: 500px) {
   .options {
     min-height: 230px;
   }
   .option-container {
     max-height: 130px;
   }
-}
+} */
 
 /* iphone 5/SE or smaller*/
-@media (max-width: 500px) and (max-height: 600px) {
+/* @media (max-width: 500px) and (max-height: 600px) {
   .options {
     min-height: 150px;
   }
   .option-container {
     max-height: 180px;
   }
-}
+} */
+
