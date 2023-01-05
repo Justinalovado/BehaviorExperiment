@@ -13,6 +13,10 @@
     margin-top: 15px;
     box-sizing: border-box;
     border: 1px solid white;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    justify-content: center;
+    align-items: center;
 }
 
 label {
@@ -31,28 +35,44 @@ img {
 
 @media screen and (max-width: 600px) {
     .option {
-        padding: 15px 120px;
+        padding: 20px 120px;
+        width: 320px;
     }
 }
 
 /* slide keyframe undone*/
-@keyframes slide {
-    0%{
-      left:0;
+
+#rollText{
+    animation: scroll-left 20s linear infinite;
+}
+
+@-moz-keyframes scroll-left {
+    0% {
+        -moz-transform: translateX(100%);
     }
-    25%{
-      left: -4rem;    
-    }
-    50%{
-      left: -8rem;
-    }
-    72.5%{
-      left: -12.25rem;
+    100% {
+        -moz-transform: translateX(-100%);
     }
 }
 
-.roller #rolltext {
-    position: absolute;
-    left: 0;
-    animation: slide 5s infinite;  
+@-webkit-keyframes scroll-left {
+    0% {
+        -webkit-transform: translateX(100%);
+    }
+    100% {
+        -webkit-transform: translateX(-100%);
+    }
+}
+
+@keyframes scroll-left {
+    0% {
+        /* -moz-transform: translateX(100%);
+        -webkit-transform: translateX(100%); */
+        transform: translateX(0%);
+    }
+    100% {
+        -moz-transform: translateX(-100%);
+        -webkit-transform: translateX(-100%);
+        transform: translateX(-100%);
+    }
 }

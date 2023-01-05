@@ -13,7 +13,9 @@ function Option({ text, className="", removeOption, optionIdx }) {
     
     return (
         <div className={`${className} option`} id={optionIdx}>
-            <label>{option}</label>
+            {/* {option.length > 20 ? option.slice(0, 20) + "..." : option} */}
+            {option.length > 30 ? <label id="rollText">{option}</label> : <label>{option}</label>}
+            {/* <label>{option}</label> */}
             <img src={trash} alt="delete" onClick={(e) => {
                 removeOption(e.target.parentNode.id);
             }} />
