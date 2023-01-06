@@ -125,7 +125,7 @@ function EventPlanning() {
               // setQuestionIdx(0) is for resetting the questionIdx
               setFinish(true);
               console.log(optionList);
-              localStorage.clear()
+              localStorage.removeItem("idx");
             }
           }}
         />
