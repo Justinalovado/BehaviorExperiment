@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import useQuestion from '../hooks/useQuestion'
 
+import Question from '../components/Question'
 import './PostActivity.css'
 
 function PostActivity() {
@@ -10,9 +11,7 @@ function PostActivity() {
     const question = useQuestion(questionIdx, "postActivity")
     return (
         <div className="PostActivity">
-            <div className="question">
-                <span>{question}</span>
-            </div>
+            <Question question={question} />
         </div>
   )
 }

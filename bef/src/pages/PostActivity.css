@@ -1,5 +1,10 @@
 .PostActivity {
+    display: flex;
+    flex-direction: column;
     background: linear-gradient(180deg, #00C3FF 0%, #11A779 100%);
     height: 100vh;
     width: 100vw;
+    text-align: center;
+    color: white;
+    font-family: "Alef";
 }
