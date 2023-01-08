@@ -43,7 +43,7 @@ img {
 /* slide keyframe undone*/
 
 #rollText{
-    animation: scroll-left 20s linear infinite;
+    animation: scroll-left 15s linear infinite;
 }
 
 @-moz-keyframes scroll-left {
@@ -68,7 +68,7 @@ img {
     0% {
         /* -moz-transform: translateX(100%);
         -webkit-transform: translateX(100%); */
-        transform: translateX(0%);
+        transform: translateX(50%);
     }
     100% {
         -moz-transform: translateX(-100%);
