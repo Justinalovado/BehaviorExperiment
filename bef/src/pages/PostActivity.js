@@ -1,13 +1,18 @@
 import React from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import useQuestion from '../hooks/useQuestion'
 
 import './PostActivity.css'
 
 function PostActivity() {
+    const [questionIdx, setQuestionIdx] = useState(0);
+    const question = useQuestion(questionIdx, "postActivity")
     return (
         <div className="PostActivity">
-            
-            <Link to="/">Back to Event Planning</Link>
+            <div className="question">
+                <span>{question}</span>
+            </div>
         </div>
   )
 }

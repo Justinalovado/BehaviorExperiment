@@ -26,7 +26,7 @@ import "./EventPlanning.css";
 
 function EventPlanning() {
   const [questionIdx, setQuestionIdx] = useState(0);
-  const question = useQuestion(questionIdx);
+  const question = useQuestion(questionIdx, "eventPlanning");
   const { optionList, setOptionList, addOption, removeOption } = useOption();
   const [openModal, setOpenModal] = useState(false);
   const [finish, setFinish] = useState(false);
@@ -35,17 +35,9 @@ function EventPlanning() {
   const generateKey = (pre) => {
     return `${ pre }_${ new Date().getTime() }`;
   }
-  // const btnStyle = {
-  //   '@media (max-width: 463px)': {
-  //     padding: "20px 101px",
-  //   },
-  //   '@media (min-width: 464px)': {
-  //     padding: "20px 121px",
-  //   }
-  // }
 
   useEffect(() => {
-    //save idx
+    // load the question index from the local storage
     const idx = JSON.parse(localStorage.getItem("idx"));
     if (idx) {
       setQuestionIdx(idx);
