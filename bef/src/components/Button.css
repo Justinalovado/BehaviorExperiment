@@ -1,4 +1,6 @@
 button {
+    display: flex;
+    position: relative;
     background-color: rgba(0, 159, 255, 1);
     border: none;
     border-radius: 38px;
@@ -9,4 +11,68 @@ button {
     padding: 20px 102px;
     box-sizing: border-box;
     border: 1px solid white;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.button label {
+    cursor: pointer;
+    margin-right: auto;
+    margin-left: auto;
+    flex-shrink: 0; /* prevent label from shrinking beyond its fixed width */
+    text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+    .option {
+        padding: 20px 120px;
+        width: 320px;
+    }
+}
+
+/* slide keyframe undone*/
+
+#rollText{
+    animation: scroll-left 15s linear infinite;
+}
+
+@-moz-keyframes scroll-left {
+    0% {
+        -moz-transform: translateX(100%);
+    }
+    100% {
+        -moz-transform: translateX(-100%);
+    }
+}
+
+@-webkit-keyframes scroll-left {
+    0% {
+        -webkit-transform: translateX(100%);
+    }
+    100% {
+        -webkit-transform: translateX(-100%);
+    }
+}
+
+@keyframes scroll-left {
+    0% {
+        /* -moz-transform: translateX(100%);
+        -webkit-transform: translateX(100%); */
+        transform: translateX(50%);
+    }
+    100% {
+        -moz-transform: translateX(-100%);
+        -webkit-transform: translateX(-100%);
+        transform: translateX(-100%);
+    }
+}
+
+@media screen and (max-width: 600px) {
+    button {
+        padding: 20px 120px;
+        width: 320px;
+    }
 }

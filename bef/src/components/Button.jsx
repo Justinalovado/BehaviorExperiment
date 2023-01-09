@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import "./Button.css";
-
-function Button({ text, className="", onClick, style }) {
+import useWindowDimensions from "../hooks/useWindowDimension";
+// this is 
+function Button({ text, className="", onClick, style, id }) {
+    const { width, height } = useWindowDimensions();
     const [buttonText, setButtonText] = useState("Click me, please"); 
     useEffect(() => {
         if (text) {
@@ -10,7 +12,9 @@ function Button({ text, className="", onClick, style }) {
     }, [text]);
     
     return (
-        <button className={className} onClick={onClick} style={style}>{buttonText}</button>
+        <button className={className === "" ? "button" : className} onClick={onClick} style={style}>
+             {width <= 600 && buttonText.length > 30 || buttonText.length > 76 ? <label id="rollText">{buttonText}</label> : <label>{buttonText}</label>}
+        </button>
     );
 }
 
