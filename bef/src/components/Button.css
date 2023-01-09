@@ -76,3 +76,7 @@ button {
         width: 320px;
     }
 }
+
+.selected {
+    background-color: purple;
+}

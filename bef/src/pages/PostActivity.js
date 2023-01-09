@@ -23,9 +23,17 @@ function PostActivity() {
             .filter((item) => item.questionIdx === 1) // filter the optionList to get the answers to the second question
             .map((item) => (
                 <Button
+                  key={item.optionIdx}
                   text={item.option}
                   style={{ marginTop: "15px", maxWidth: "700px" }}
-                  onClick={ () => console.log("clicked!!") }
+                  onClick={ (e) => {
+                    if (e.target.tagName === "LABEL") {
+                      e.target.parentElement.classList.toggle("selected");
+                    }
+                    else {
+                      e.target.classList.toggle("selected")
+                    }
+                  } }
                 />
               )
             )}
