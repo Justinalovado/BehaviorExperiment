@@ -12,7 +12,7 @@
 .slide-container{
     font-family: "Alef";
     color: white;
-    margin-bottom: 40%;
+    margin-bottom: 20vh;
 }
 
 .met-questions{
@@ -32,8 +32,10 @@
 
 .pre-act-container .btn-container button{
     margin: 25px auto 0 auto;
-    width: 85vw;
+    width: 75vw;
+    padding: 0.5em;
     max-width: 450px;
+    text-justify: auto;
 }
 .pre-act-container .btn-container button:hover{
     background-color: rgba(0, 157, 255, 0.72);
