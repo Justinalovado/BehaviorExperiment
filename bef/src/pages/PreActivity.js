@@ -12,9 +12,17 @@ function PreActivity() {
 	const NEXT_TXT = "Next ->";
 	const PREV_TXT = "<- Prev";
 
+	const generateKey = (pre) => {
+		return `${ pre }_${ new Date().getTime() }`;
+	}
+
 
 	const printMetric = () => {
 		console.log(Metrics);
+	}
+
+	const saveMetrics = () => {
+		localStorage.setItem(generateKey("record_"), JSON.stringify(Metrics))
 	}
 
 	const nextSection = () => {
@@ -22,6 +30,7 @@ function PreActivity() {
 			setPart(Part + 1)
 		}else{
 			navigate("/404")
+			saveMetrics()
 		}
 	}
 	const prevSection = () => {
