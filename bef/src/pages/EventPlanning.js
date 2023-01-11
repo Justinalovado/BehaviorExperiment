@@ -78,14 +78,14 @@ function EventPlanning() {
         option={option}
         onTextChange={(text) => setOption(text)}
         addOption={addOption}
-        questionIdx={questionIdx}
+        question={question}
         optionIdx={generateKey(option)}
       />
 
       <div className="options">
         <div className="option-container"> 
         {/* filter() for getting answers to the corresponding questions */}
-          { optionList.filter(item => item.questionIdx === questionIdx).map((item) => (
+          { optionList.filter(item => item.question === question).map((item) => (
             <Option key={item.optionIdx}
               text={item.option}
               removeOption={removeOption}

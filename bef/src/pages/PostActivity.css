@@ -19,3 +19,9 @@
   max-height: 80%;
   align-items: center;
 }
+
+.buttons {
+  margin: 0 auto;
+  height: 60%;
+  min-height: 200px;
+}

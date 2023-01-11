@@ -2,7 +2,7 @@ import React from "react";
 import "./Modal.css";
 import Button from "./Button";
 
-function Modal({ open, onClose, option, onTextChange, addOption, questionIdx, optionIdx }) {
+function Modal({ open, onClose, option, onTextChange, addOption, question, optionIdx }) {
   if (!open) return null;
 
   return (
@@ -17,7 +17,7 @@ function Modal({ open, onClose, option, onTextChange, addOption, questionIdx, op
         <div className="content">
           <input className="answerBox" type="text" onChange={(e) => onTextChange(e.target.value)}/>
           <Button className="saveBtn" text="Save" onClick={() => {
-              addOption(option, questionIdx, optionIdx);
+              addOption(option, question, optionIdx);
               onClose();
             }} />
         </div>

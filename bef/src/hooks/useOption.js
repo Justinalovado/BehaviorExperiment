@@ -17,10 +17,10 @@ function useOption() {
   }, [optionList]);
 
   // ------------------------------------------------------ //
-  const addOption = (option, questionIdx, optionIdx) => {
+  const addOption = (option, question, optionIdx) => {
     setOptionList([
       ...optionList,
-      { questionIdx: questionIdx, option: option, optionIdx: optionIdx },
+      { question: question, option: option, optionIdx: optionIdx },
     ]);
   };
 
