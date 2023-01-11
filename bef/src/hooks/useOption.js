@@ -20,7 +20,7 @@ function useOption() {
   const addOption = (option, question, optionIdx) => {
     setOptionList([
       ...optionList,
-      { question: question, option: option, optionIdx: optionIdx },
+      { question: question, option: option, optionIdx: optionIdx, selected: false},
     ]);
   };
 
@@ -30,7 +30,18 @@ function useOption() {
     localStorage.setItem("optionList", JSON.stringify(newList)); // update localStorage even when optionList has one item only
   };
 
-  return { optionList, setOptionList, addOption, removeOption };
+  const selectOption = (currentIdx) => {
+    const newList = optionList.map((item) => {
+      if (item.optionIdx === currentIdx) {
+        return { ...item, selected: !item.selected };
+      }
+      return item;
+    });
+    setOptionList(newList);
+    localStorage.setItem("optionList", JSON.stringify(newList));
+  };
+
+  return { optionList, setOptionList, addOption, removeOption, selectOption };
 }
 
 export default useOption;
