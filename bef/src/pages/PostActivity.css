@@ -20,8 +20,18 @@
   align-items: center;
 }
 
+/* be careful when changing these two components */
+/* .buttons is a container containing buttons */
+/* .button is a single button */
 .buttons {
   margin: 0 auto;
   height: 60%;
   min-height: 200px;
+}
+
+@media screen and (max-width: 320px) {
+  .button {
+    padding: 15px 80px;
+    width: 200px;
+  }
 }

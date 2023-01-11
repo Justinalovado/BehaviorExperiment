@@ -59,6 +59,9 @@ function PostActivity() {
                   text={item.option}
                   style={{ marginTop: "15px", maxWidth: "700px" }}
                   onClick={(e) => {
+                    // toggle the selected class
+                    // if the target is the label, toggle the parent element
+                    // otherwise toggle the target element
                     if (e.target.tagName === "LABEL") {
                       e.target.parentElement.classList.toggle("selected");
                     } else {
