@@ -11,21 +11,26 @@ import "./PostActivity.css";
 
 // optionList will be sent at the end as the response of the client (backend)
 // PostActivity will not show up if optionList is empty or null
-
+const MAXIDX = 4;
 function PostActivity() {
   const [questionIdx, setQuestionIdx] = useState(0);
   const question = useQuestion(questionIdx, "postActivity");
-  const { addOption, selectOption } = useOption();
+  const { addOption, selectOption, addText } = useOption();
   const [optionList, setOptionList] = useState(
     JSON.parse(localStorage.getItem("optionList"))
   );
-
+  const [finish, setFinish] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [option, setOption] = useState("");
   
+	const text_question = [
+		"Who did you interact with during the activity",
+		"Compared to the initial predictions, what actually happened?",
+		"What did you learn? What is a more realistic view about this situation"
+	]
 	const safety_behvs = (
-		<div className="buttons">
-			<div className="buttonContainer">
+		<div className="options">
+			<div className="option-container">
 				{optionList &&
 					optionList
 						.filter(
@@ -63,6 +68,37 @@ function PostActivity() {
 			/>
 		</div>
 	)
+	const txt_box = (
+		<div className="inputBox">
+      <textarea className="input" id={question} placeholder="Type your answer here"/>
+    </div>
+	)
+	
+	const handle_next = () => {
+		// optionIdx is (question + key) not (answer + key)
+		if (text_question.includes(question)) {
+			addText(
+				document.getElementById(question).value,
+				question,
+				generateKey(question)
+			);
+			document.getElementsByTagName("textarea").value = "";
+		}
+		if (questionIdx < MAXIDX-1) {
+			setQuestionIdx(questionIdx + 1);
+		} else {
+			// save optionList to the backend
+			// optionList is the response of the client
+			setFinish(true);
+			localStorage.removeItem("idx");
+		}
+	}
+
+	const handle_prev = () => {
+		if (questionIdx > 0) {
+			setQuestionIdx(questionIdx - 1);
+		}
+	}
 
   const generateKey = (pre) => {
     return `${pre}_${new Date().getTime()}`;
@@ -74,6 +110,34 @@ function PostActivity() {
       setOptionList(newList);
     }
   }, [openModal]);
+
+  useEffect(() => {
+    if (questionIdx > 1 && document.getElementById(question)) {
+      document.getElementById(question).value = "";
+    }
+  }, [questionIdx]);
+
+  useEffect(() => {
+    // load the question index from the local storage
+    const idx = JSON.parse(localStorage.getItem("idx"));
+    if (idx) {
+      setQuestionIdx(idx);
+    }
+  }, []);
+  
+  useEffect(() => {
+    if (questionIdx < MAXIDX) {
+      localStorage.setItem("idx", JSON.stringify(questionIdx));
+    }
+  }, [questionIdx]);
+  if (finish) {
+    return (
+      <div className="PostActivity">
+        <Question question={"Thank you for your participation"} />
+      </div>
+    );
+  }
+
 
   return (
     <div className="PostActivity">
@@ -88,8 +152,24 @@ function PostActivity() {
       />
       <Question question={question} />
 
+      {(text_question.includes(question)) && (txt_box)}
+
       {question === "Out of all safety behavious how much did you use?" && (safety_behvs)}
 
+      <div className="button-container" style={{ marginBottom: "20px" }}>
+        <Button
+          className={questionIdx !== MAXIDX-1 ? "nextButton" : "saveButton"}
+          text={questionIdx !== MAXIDX-1 ? "Next ->" : "Submit"}
+          onClick={handle_next}
+        />
+        {questionIdx > 0 && (
+          <Button
+            className="prevButton"
+            text={"<- Prev"}
+            onClick={handle_prev}
+          />
+        )}
+      </div>
     </div>
   );
 }
