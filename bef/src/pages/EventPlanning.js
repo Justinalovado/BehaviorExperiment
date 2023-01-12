@@ -6,6 +6,7 @@ import Button from "../components/Button";
 import Option from "../components/Option";
 import Modal from "../components/Modal";
 import "./EventPlanning.css";
+import { Link } from "react-router-dom";
 
 // optionList will be sent at the end as the response of the client (backend)
 // questionIdx is the index of the question
@@ -62,7 +63,9 @@ function EventPlanning() {
         </div>
         <div className="option-container" style={{overflowY: "visible"}}>
           <span style={{fontSize: "2em"}}><p>Would you like to:</p></span>
-          <Button className="addButton" text="Start Activity!" />
+          <Link to="pre-activity">
+            <Button className="addButton" text="Start Activity!" />
+          </Link>
           <Button className="backToMenuButton" text="Back to Menu"/>
         </div>
       </div>

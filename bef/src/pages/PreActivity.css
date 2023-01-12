@@ -1,0 +1,53 @@
+.pre-act-container{
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(180deg, #4776e6 0%, #01C3FD 100%);
+}
+
+.slide-container{
+    font-family: "Alef";
+    color: white;
+    margin-bottom: 20vh;
+}
+
+.met-questions{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.pre-act-container .btn-container{
+    position: absolute;
+    bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+
+.pre-act-container .btn-container button{
+    margin: 25px auto 0 auto;
+    width: 75vw;
+    padding: 0.5em;
+    max-width: 450px;
+    text-justify: auto;
+}
+.pre-act-container .btn-container button:hover{
+    background-color: rgba(0, 157, 255, 0.72);
+}
+
+.met-questions h2{
+    max-width: 380px;
+    margin-block-end: 1.5em;
+}
+
+.met-questions p{
+    max-width: 280px;
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
