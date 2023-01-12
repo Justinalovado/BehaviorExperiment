@@ -10,7 +10,7 @@ function App() {
     <Router>
       <Routes>
         <Route path='/' element={<EventPlanning />} />
-        <Route path='/pre-activity' element={<PreActivity />} />
+        <Route path='/PreActivity' element={<PreActivity />} />
         <Route path="/PostActivity" element={<PostActivity />} />
         <Route path='*' element={<h1>Error404</h1>} />
       </Routes>

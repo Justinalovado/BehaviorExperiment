@@ -29,7 +29,7 @@ function PreActivity() {
 		if (Part + 1 < section.length){
 			setPart(Part + 1)
 		}else{
-			navigate("/404")
+			navigate("/PostActivity")
 			saveMetrics()
 		}
 	}

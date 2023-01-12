@@ -22,6 +22,47 @@ function PostActivity() {
 
   const [openModal, setOpenModal] = useState(false);
   const [option, setOption] = useState("");
+  
+	const safety_behvs = (
+		<div className="buttons">
+			<div className="buttonContainer">
+				{optionList &&
+					optionList
+						.filter(
+							(item) =>
+								item.question ===
+								"What would be your likely safety behaviour"
+						) // filter the optionList to get the answers to the second question
+						.map((item) => (
+							<Button
+								key={item.optionIdx}
+								text={item.option}
+								className={item.selected ? "selected button" : "button"}
+								style={{ marginTop: "15px", maxWidth: "700px" }}
+								onClick={(e) => {
+									// toggle the selected class
+									// if the target is the label, toggle the parent element
+									// otherwise toggle the target element
+									if (e.target.tagName === "LABEL") {
+										e.target.parentElement.classList.toggle("selected");
+									} else {
+										e.target.classList.toggle("selected");
+									}
+									selectOption(item.optionIdx);
+								}}
+							/>
+						))}
+			</div>
+			<Button
+				className="addButton"
+				text="Add New +"
+				onClick={() => {
+					setOpenModal(true);
+					setOption("");
+				}}
+			/>
+		</div>
+	)
 
   const generateKey = (pre) => {
     return `${pre}_${new Date().getTime()}`;
@@ -47,46 +88,8 @@ function PostActivity() {
       />
       <Question question={question} />
 
-      {question === "Out of all safety behavious how much did you use?" && (
-        <div className="buttons">
-          <div className="buttonContainer">
-            {optionList &&
-              optionList
-                .filter(
-                  (item) =>
-                    item.question ===
-                    "What would be your likely safety behaviour"
-                ) // filter the optionList to get the answers to the second question
-                .map((item) => (
-                  <Button
-                    key={item.optionIdx}
-                    text={item.option}
-                    className={item.selected ? "selected button" : "button"}
-                    style={{ marginTop: "15px", maxWidth: "700px" }}
-                    onClick={(e) => {
-                      // toggle the selected class
-                      // if the target is the label, toggle the parent element
-                      // otherwise toggle the target element
-                      if (e.target.tagName === "LABEL") {
-                        e.target.parentElement.classList.toggle("selected");
-                      } else {
-                        e.target.classList.toggle("selected");
-                      }
-                      selectOption(item.optionIdx);
-                    }}
-                  />
-                ))}
-          </div>
-          <Button
-            className="addButton"
-            text="Add New +"
-            onClick={() => {
-              setOpenModal(true);
-              setOption("");
-            }}
-          />
-        </div>
-      )}
+      {question === "Out of all safety behavious how much did you use?" && (safety_behvs)}
+
     </div>
   );
 }
