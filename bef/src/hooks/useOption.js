@@ -23,7 +23,20 @@ function useOption() {
       { question: question, option: option, optionIdx: optionIdx, selected: false},
     ]);
   };
-
+  const addText = (option, question, optionIdx) => {
+    const target = optionList.find((item) => item.question === question);
+    if (target){
+      setOptionList(optionList.map((item) => {
+        if (item.question === question) {
+          return { ...item, option: option, optionIdx: optionIdx };
+        }
+        return item;
+      }));
+    }
+    else {
+      addOption(option, question, optionIdx);
+    }
+  }
   const removeOption = (currentIdx) => {
     const newList = optionList.filter((item) => item.optionIdx !== currentIdx);
     setOptionList(optionList.filter((item) => item.optionIdx !== currentIdx));
@@ -41,7 +54,7 @@ function useOption() {
     localStorage.setItem("optionList", JSON.stringify(newList));
   };
 
-  return { optionList, setOptionList, addOption, removeOption, selectOption };
+  return { optionList, setOptionList, addOption, removeOption, selectOption, addText };
 }
 
 export default useOption;

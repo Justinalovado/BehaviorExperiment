@@ -11,15 +11,15 @@ import "./PostActivity.css";
 
 // optionList will be sent at the end as the response of the client (backend)
 // PostActivity will not show up if optionList is empty or null
-
+const MAXIDX = 4;
 function PostActivity() {
   const [questionIdx, setQuestionIdx] = useState(0);
   const question = useQuestion(questionIdx, "postActivity");
-  const { addOption, selectOption } = useOption();
+  const { addOption, selectOption, addText } = useOption();
   const [optionList, setOptionList] = useState(
     JSON.parse(localStorage.getItem("optionList"))
   );
-
+  const [finish, setFinish] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [option, setOption] = useState("");
 
@@ -34,6 +34,32 @@ function PostActivity() {
     }
   }, [openModal]);
 
+  useEffect(() => {
+    if (questionIdx > 1 && document.getElementById(question)) {
+      document.getElementById(question).value = "";
+    }
+  }, [questionIdx]);
+
+  useEffect(() => {
+    // load the question index from the local storage
+    const idx = JSON.parse(localStorage.getItem("idx"));
+    if (idx) {
+      setQuestionIdx(idx);
+    }
+  }, []);
+  
+  useEffect(() => {
+    if (questionIdx < MAXIDX) {
+      localStorage.setItem("idx", JSON.stringify(questionIdx));
+    }
+  }, [questionIdx]);
+  if (finish) {
+    return (
+      <div className="PostActivity">
+        <Question question={"Thank you for your participation"} />
+      </div>
+    );
+  }
   return (
     <div className="PostActivity">
       <Modal
@@ -47,9 +73,23 @@ function PostActivity() {
       />
       <Question question={question} />
 
+      {(question === "Who did you interact with during the activity" ||
+        question ===
+          "Compared to the initial predictions, what actually happened?" ||
+        question ===
+          "What did you learn? What is a more realistic view about this situation") && (
+        <div className="inputBox">
+          <textarea
+            className="input"
+            id={question}
+            placeholder="Type your answer here"
+          />
+        </div>
+      )}
+
       {question === "Out of all safety behavious how much did you use?" && (
-        <div className="buttons">
-          <div className="buttonContainer">
+        <div className="options">
+          <div className="option-container">
             {optionList &&
               optionList
                 .filter(
@@ -87,6 +127,48 @@ function PostActivity() {
           />
         </div>
       )}
+      <div className="button-container" style={{ marginBottom: "20px" }}>
+        <Button
+          className={questionIdx !== MAXIDX-1 ? "nextButton" : "saveButton"}
+          text={questionIdx !== MAXIDX-1 ? "Next ->" : "Submit"}
+          onClick={() => {
+            // optionIdx is (question + key) not (answer + key)
+            if (
+              question === "Who did you interact with during the activity" ||
+              question ===
+                "Compared to the initial predictions, what actually happened?" ||
+              question ===
+                "What did you learn? What is a more realistic view about this situation"
+            ) {
+              addText(
+                document.getElementById(question).value,
+                question,
+                generateKey(question)
+              );
+              document.getElementsByTagName("textarea").value = "";
+            }
+            if (questionIdx < MAXIDX-1) {
+              setQuestionIdx(questionIdx + 1);
+            } else {
+              // save optionList to the backend
+              // optionList is the response of the client
+              setFinish(true);
+              localStorage.removeItem("idx");
+            }
+          }}
+        />
+        {questionIdx > 0 && (
+          <Button
+            className="prevButton"
+            text={"<- Prev"}
+            onClick={() => {
+              if (questionIdx > 0) {
+                setQuestionIdx(questionIdx - 1);
+              }
+            }}
+          />
+        )}
+      </div>
     </div>
   );
 }

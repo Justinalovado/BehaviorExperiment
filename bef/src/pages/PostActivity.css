@@ -9,7 +9,20 @@
   font-family: "Alef";
 }
 
-.buttonContainer {
+.inputBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80%;
+}
+textarea {
+  width: 80%;
+  height: 80%;
+  font-size: 20px;
+  font-family: "Inter";
+}
+/* .buttonContainer {
   display: flex;
   flex-direction: column;
   margin: 0 auto;
@@ -18,16 +31,17 @@
   height: auto;
   max-height: 80%;
   align-items: center;
-}
+} */
 
 /* be careful when changing these two components */
 /* .buttons is a container containing buttons */
 /* .button is a single button */
-.buttons {
+/* .buttons {
   margin: 0 auto;
   height: 80%;
   min-height: 200px;
-}
+} */
+
 
 @media screen and (max-width: 320px) {
   .button {
