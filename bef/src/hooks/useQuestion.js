@@ -9,6 +9,9 @@ function useQuestion(idx, page) {
     ],
     postActivity: [
       "Out of all safety behavious how much did you use?",
+
+      "",
+
       "Who did you interact with during the activity",
       "Compared to the initial predictions, what actually happened?",
       "What did you learn? What is a more realistic view about this situation",

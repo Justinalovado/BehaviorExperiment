@@ -47,7 +47,7 @@ function PreActivity() {
 				<h2>How anxious are you?</h2>
 				<Slider curMetric="met-1" Metrics={Metrics} setMetrics={setMetrics} />
 			</div>
-		),(
+		), (
 			<div className='met-questions'>
 				<h2>How strongly do you feel:</h2>
 				<p>Your worst fear will happen?</p>
@@ -59,13 +59,12 @@ function PreActivity() {
 				<p>You will appear anxious during the activity?</p>
 				<Slider curMetric="met-5" Metrics={Metrics} setMetrics={setMetrics} />
 			</div>
-		),(
+		), (
 			<div className='met-questions'>
 				<h2>How bad do you think the outcome of the activity will be?</h2>
 				<Slider curMetric="met-6" Metrics={Metrics} setMetrics={setMetrics} />
 			</div>
 		)
-
 	]
 
   return (

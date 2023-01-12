@@ -7,6 +7,7 @@ import Option from "../components/Option";
 import Modal from "../components/Modal";
 import "./EventPlanning.css";
 import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 // optionList will be sent at the end as the response of the client (backend)
 // questionIdx is the index of the question
@@ -63,7 +64,7 @@ function EventPlanning() {
         </div>
         <div className="option-container" style={{overflowY: "visible"}}>
           <span style={{fontSize: "2em"}}><p>Would you like to:</p></span>
-          <Link to="pre-activity">
+          <Link to="PreActivity">
             <Button className="addButton" text="Start Activity!" />
           </Link>
           <Button className="backToMenuButton" text="Back to Menu"/>
@@ -121,6 +122,7 @@ function EventPlanning() {
               setFinish(true);
               console.log(optionList);
               localStorage.removeItem("idx");
+              
             }
           }}
         />

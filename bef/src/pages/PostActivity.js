@@ -7,11 +7,12 @@ import useOption from "../hooks/useOption";
 import Modal from "../components/Modal";
 import Button from "../components/Button";
 import Question from "../components/Question";
+import Slider from "../components/Slider";
 import "./PostActivity.css";
 
 // optionList will be sent at the end as the response of the client (backend)
 // PostActivity will not show up if optionList is empty or null
-const MAXIDX = 4;
+const MAXIDX = 5;
 function PostActivity() {
   const [questionIdx, setQuestionIdx] = useState(0);
   const question = useQuestion(questionIdx, "postActivity");
@@ -22,7 +23,8 @@ function PostActivity() {
   const [finish, setFinish] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [option, setOption] = useState("");
-  
+  const [Metrics, setMetrics] = useState({});
+
 	const text_question = [
 		"Who did you interact with during the activity",
 		"Compared to the initial predictions, what actually happened?",
@@ -99,6 +101,31 @@ function PostActivity() {
 			setQuestionIdx(questionIdx - 1);
 		}
 	}
+	
+	const slide_questions = [
+		"How anxious do you fell right now?",
+		"How anxious were you at the peak anxiety level?",
+		"How anxious did you feel at the end of activity?",
+		"How surprised do you fell about the outcome of the activity?",
+		"How strongly do you believe your worst fears happened during the activity?",
+		"How strongly do you believe you were judged negatively during the activity?",
+		"How strongly do you believe you appeared anxious during the activity?",
+		"How bad do you think the outcome of the activity was?"
+	]
+
+
+	const sliders = (
+		<div className='post-met-questions'>
+				{slide_questions.map((q, i) => {
+					return (
+						<div className='met-questions'>
+							<p>{q}</p>
+							<Slider curMetric={`met-${6 + i}`} Metrics={Metrics} setMetrics={setMetrics} />
+						</div>
+					)
+				})}
+		</div>
+	)
 
   const generateKey = (pre) => {
     return `${pre}_${new Date().getTime()}`;
@@ -155,7 +182,8 @@ function PostActivity() {
       {(text_question.includes(question)) && (txt_box)}
 
       {question === "Out of all safety behavious how much did you use?" && (safety_behvs)}
-
+			
+			{question === "" && (sliders)}
       <div className="button-container" style={{ marginBottom: "20px" }}>
         <Button
           className={questionIdx !== MAXIDX-1 ? "nextButton" : "saveButton"}

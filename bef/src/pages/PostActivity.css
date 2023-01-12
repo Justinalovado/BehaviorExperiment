@@ -42,6 +42,32 @@ textarea {
   min-height: 200px;
 } */
 
+.post-met-questions{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  overflow-y: scroll;
+  width: 100vw;
+}
+
+.post-met-questions p{
+  max-width: 280px;
+}
+
+.post-met-questions .met-questions{
+  align-items: center;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  background-color: #74747400;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #7f7f7f;
+  border-radius: 10px;
+}
+
 
 @media screen and (max-width: 320px) {
   .button {
