@@ -69,12 +69,12 @@ function PostActivity() {
 				}}
 			/>
 		</div>
-	)
+	);
 	const txt_box = (
 		<div className="inputBox">
-      <textarea className="input" id={question} placeholder="Type your answer here"/>
-    </div>
-	)
+      		<textarea className="input" id={question} placeholder="Type your answer here"/>
+    	</div>
+	);
 	
 	const handle_next = () => {
 		// optionIdx is (question + key) not (answer + key)
@@ -120,7 +120,7 @@ function PostActivity() {
 					return (
 						<div className='met-questions'>
 							<p>{q}</p>
-							<Slider curMetric={`met-${6 + i}`} Metrics={Metrics} setMetrics={setMetrics} />
+							<Slider curMetric={`met-${7 + i}`} Metrics={Metrics} setMetrics={setMetrics} />
 						</div>
 					)
 				})}

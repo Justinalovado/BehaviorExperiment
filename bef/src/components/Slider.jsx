@@ -6,12 +6,9 @@ import "./Slider.css"
 function Slider( { curMetric, Metrics, setMetrics } ) {
 	const [slideValue, setslideValue] = useState(50);
 	const handleUpdate = () => {
-		let val = document.getElementById(`${curMetric}`).value
-		setslideValue(val)
-		setMetrics({
-			...Metrics,
-			[curMetric]:val
-		})
+		let val = document.getElementById(`${curMetric}`).value;
+		setslideValue(val);
+		setMetrics(Metrics => {return {...Metrics,[curMetric]:val}});
 		const elem = document.getElementById(`${curMetric}-pointer`);
 		elem.style.paddingLeft = (val*0.942) + "%";
 	}
@@ -28,7 +25,13 @@ function Slider( { curMetric, Metrics, setMetrics } ) {
 					{slideValue}
 				</div>
 			</div>
-			<input className="slider-track" id={curMetric} type="range" min="0" max="100" step="5" onChange={handleUpdate}/>
+			<input 	className="slider-track" 
+					id={curMetric} 
+					type="range" 
+					min="0" 
+					max="100" 
+					step="5" 
+					onChange={handleUpdate}/>
 			<div className="label-container">
 				<div>0</div>
 				<div>100</div>

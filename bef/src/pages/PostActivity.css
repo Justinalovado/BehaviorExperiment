@@ -16,11 +16,14 @@
   align-items: center;
   height: 80%;
 }
+
 textarea {
   width: 80%;
   height: 80%;
   font-size: 20px;
   font-family: "Inter";
+  border-radius: 10px;
+  padding: 0.5em;
 }
 /* .buttonContainer {
   display: flex;

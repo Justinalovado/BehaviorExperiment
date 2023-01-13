@@ -33,10 +33,12 @@ function EventPlanning() {
   const [openModal, setOpenModal] = useState(false);
   const [finish, setFinish] = useState(false);
   const [option, setOption] = useState("");
-  
+  const navigate = useNavigate();
   const generateKey = (pre) => {
     return `${ pre }_${ new Date().getTime() }`;
   }
+
+  const handleStart = () => {navigate("/PreActivity")}
 
   useEffect(() => {
     // load the question index from the local storage
@@ -64,9 +66,7 @@ function EventPlanning() {
         </div>
         <div className="option-container" style={{overflowY: "visible"}}>
           <span style={{fontSize: "2em"}}><p>Would you like to:</p></span>
-          <Link to="PreActivity">
-            <Button className="addButton" text="Start Activity!" />
-          </Link>
+          <Button className="addButton" text="Start Activity!" onClick={handleStart} />
           <Button className="backToMenuButton" text="Back to Menu"/>
         </div>
       </div>
