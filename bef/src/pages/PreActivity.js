@@ -74,8 +74,8 @@ function PreActivity() {
 				{/* <button onClick={printMetric}>print</button> */}
 			</div>
 			<div className='btn-container'>
-				<button onClick={prevSection}>{PREV_TXT}</button>
 				<button onClick={nextSection}>{NEXT_TXT}</button>
+				<button onClick={prevSection}>{PREV_TXT}</button>
 			</div>
     </div>
   )
