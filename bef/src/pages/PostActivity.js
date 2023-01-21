@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
+import storeOptionList from "../firebase";
 import useQuestion from "../hooks/useQuestion";
 import useOption from "../hooks/useOption";
 
@@ -25,111 +26,117 @@ function PostActivity() {
   const [option, setOption] = useState("");
   const [Metrics, setMetrics] = useState({});
 
-	const text_question = [
-		"Who did you interact with during the activity",
-		"Compared to the initial predictions, what actually happened?",
-		"What did you learn? What is a more realistic view about this situation"
-	]
-	const safety_behvs = (
-		<div className="options">
-			<div className="option-container">
-				{optionList &&
-					optionList
-						.filter(
-							(item) =>
-								item.question ===
-								"What would be your likely safety behaviour"
-						) // filter the optionList to get the answers to the second question
-						.map((item) => (
-							<Button
-								key={item.optionIdx}
-								text={item.option}
-								className={item.selected ? "selected button" : "button"}
-								style={{ marginTop: "15px", maxWidth: "700px" }}
-								onClick={(e) => {
-									// toggle the selected class
-									// if the target is the label, toggle the parent element
-									// otherwise toggle the target element
-									if (e.target.tagName === "LABEL") {
-										e.target.parentElement.classList.toggle("selected");
-									} else {
-										e.target.classList.toggle("selected");
-									}
-									selectOption(item.optionIdx);
-								}}
-							/>
-						))}
-			</div>
-			<Button
-				className="addButton"
-				text="Add New +"
-				onClick={() => {
-					setOpenModal(true);
-					setOption("");
-				}}
-			/>
-		</div>
-	);
-	const txt_box = (
-		<div className="inputBox">
-      		<textarea className="input" id={question} placeholder="Type your answer here"/>
-    	</div>
-	);
-	
-	const handle_next = () => {
-		// optionIdx is (question + key) not (answer + key)
-		if (text_question.includes(question)) {
-			addText(
-				document.getElementById(question).value,
-				question,
-				generateKey(question)
-			);
-			document.getElementsByTagName("textarea").value = "";
-		}
-		if (questionIdx < MAXIDX-1) {
-			setQuestionIdx(questionIdx + 1);
-		} else {
-			// save optionList to the backend
-			// optionList is the response of the client
-			setFinish(true);
-			localStorage.removeItem("idx");
-		}
-	}
-
-	const handle_prev = () => {
-		if (questionIdx > 0) {
-			setQuestionIdx(questionIdx - 1);
-		}
-	}
-	
-	const slide_questions = [
-		"How anxious do you fell right now?",
-		"How anxious were you at the peak anxiety level?",
-		"How anxious did you feel at the end of activity?",
-		"How surprised do you fell about the outcome of the activity?",
-		"How strongly do you believe your worst fears happened during the activity?",
-		"How strongly do you believe you were judged negatively during the activity?",
-		"How strongly do you believe you appeared anxious during the activity?",
-		"How bad do you think the outcome of the activity was?"
-	]
-
-
-	const sliders = (
-		<div className='post-met-questions'>
-				{slide_questions.map((q, i) => {
-					return (
-						<div className='met-questions'>
-							<p>{q}</p>
-							<Slider curMetric={`met-${7 + i}`} Metrics={Metrics} setMetrics={setMetrics} />
-						</div>
-					)
-				})}
-		</div>
-	)
-
   const generateKey = (pre) => {
     return `${pre}_${new Date().getTime()}`;
   };
+
+  const text_question = [
+    "Who did you interact with during the activity",
+    "Compared to the initial predictions, what actually happened?",
+    "What did you learn? What is a more realistic view about this situation",
+  ];
+  const safety_behvs = (
+    <div className="options">
+      <div className="option-container">
+        {optionList &&
+          optionList
+            .filter(
+              (item) =>
+                item.question === "What would be your likely safety behaviour"
+            ) // filter the optionList to get the answers to the second question
+            .map((item) => (
+              <Button
+                key={item.optionIdx}
+                text={item.option}
+                className={item.selected ? "selected button" : "button"}
+                style={{ marginTop: "15px", maxWidth: "700px" }}
+                onClick={(e) => {
+                  // toggle the selected class
+                  // if the target is the label, toggle the parent element
+                  // otherwise toggle the target element
+                  if (e.target.tagName === "LABEL") {
+                    e.target.parentElement.classList.toggle("selected");
+                  } else {
+                    e.target.classList.toggle("selected");
+                  }
+                  selectOption(item.optionIdx);
+                }}
+              />
+            ))}
+      </div>
+      <Button
+        className="addButton"
+        text="Add New +"
+        onClick={() => {
+          setOpenModal(true);
+          setOption("");
+        }}
+      />
+    </div>
+  );
+  const txt_box = (
+    <div className="inputBox">
+      <textarea
+        className="input"
+        id={question}
+        placeholder="Type your answer here"
+      />
+    </div>
+  );
+
+  const handle_next = () => {
+    // optionIdx is (question + key) not (answer + key)
+    if (text_question.includes(question)) {
+      addText(
+        document.getElementById(question).value,
+        question,
+        generateKey(question)
+      );
+      document.getElementsByTagName("textarea").value = "";
+    }
+    if (questionIdx < MAXIDX - 1) {
+      setQuestionIdx(questionIdx + 1);
+    } else {
+      // save optionList to the backend
+      // optionList is the response of the client
+      setFinish(true);
+      storeOptionList(generateKey(""), optionList);
+    }
+  };
+
+  const handle_prev = () => {
+    if (questionIdx > 0) {
+      setQuestionIdx(questionIdx - 1);
+    }
+  };
+
+  const slide_questions = [
+    "How anxious do you fell right now?",
+    "How anxious were you at the peak anxiety level?",
+    "How anxious did you feel at the end of activity?",
+    "How surprised do you fell about the outcome of the activity?",
+    "How strongly do you believe your worst fears happened during the activity?",
+    "How strongly do you believe you were judged negatively during the activity?",
+    "How strongly do you believe you appeared anxious during the activity?",
+    "How bad do you think the outcome of the activity was?",
+  ];
+
+  const sliders = (
+    <div className="post-met-questions">
+      {slide_questions.map((q, i) => {
+        return (
+          <div className="met-questions">
+            <p>{q}</p>
+            <Slider
+              curMetric={`met-${7 + i}`}
+              Metrics={Metrics}
+              setMetrics={setMetrics}
+            />
+          </div>
+        );
+      })}
+    </div>
+  );
 
   useEffect(() => {
     const newList = JSON.parse(localStorage.getItem("optionList"));
@@ -151,20 +158,20 @@ function PostActivity() {
       setQuestionIdx(idx);
     }
   }, []);
-  
+
   useEffect(() => {
     if (questionIdx < MAXIDX) {
       localStorage.setItem("idx", JSON.stringify(questionIdx));
     }
   }, [questionIdx]);
   if (finish) {
+    localStorage.clear();
     return (
       <div className="PostActivity">
         <Question question={"Thank you for your participation"} />
       </div>
     );
   }
-
 
   return (
     <div className="PostActivity">
@@ -179,15 +186,16 @@ function PostActivity() {
       />
       <Question question={question} />
 
-      {(text_question.includes(question)) && (txt_box)}
+      {text_question.includes(question) && txt_box}
 
-      {question === "Out of all safety behavious how much did you use?" && (safety_behvs)}
-			
-			{question === "" && (sliders)}
+      {question === "Out of all safety behavious how much did you use?" &&
+        safety_behvs}
+
+      {question === "" && sliders}
       <div className="button-container" style={{ marginBottom: "20px" }}>
         <Button
-          className={questionIdx !== MAXIDX-1 ? "nextButton" : "saveButton"}
-          text={questionIdx !== MAXIDX-1 ? "Next ->" : "Submit"}
+          className={questionIdx !== MAXIDX - 1 ? "nextButton" : "saveButton"}
+          text={questionIdx !== MAXIDX - 1 ? "Next ->" : "Submit"}
           onClick={handle_next}
         />
         {questionIdx > 0 && (

@@ -26,7 +26,7 @@ import { useNavigate } from 'react-router-dom';
 // useEffect is called when the questionIdx is changed
 // useEffect is called when the optionList is changed
 
-function EventPlanning() {
+export default function EventPlanning() {
   const [questionIdx, setQuestionIdx] = useState(0);
   const question = useQuestion(questionIdx, "eventPlanning");
   const { optionList, setOptionList, addOption, removeOption } = useOption();
@@ -120,9 +120,7 @@ function EventPlanning() {
               // optionList is the response of the client
               // setQuestionIdx(0) is for resetting the questionIdx
               setFinish(true);
-              console.log(optionList);
               localStorage.removeItem("idx");
-              
             }
           }}
         />
@@ -145,4 +143,4 @@ function EventPlanning() {
   );
 }
 
-export default EventPlanning;
+
