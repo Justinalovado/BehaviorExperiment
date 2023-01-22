@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react";
 
-function useOption() {
-  const [optionList, setOptionList] = useState([]);
+function useOption(finish) {
+  const [optionList, setOptionList] = useState(JSON.parse(localStorage.getItem("optionList") || "[]"));
   // ----------------localStorage part--------------------- //
-  useEffect(() => {
-    const optionList = JSON.parse(localStorage.getItem("optionList"));
-    if (optionList) {
-      setOptionList(optionList);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const optionList = JSON.parse(localStorage.getItem("optionList"));
+  //   if (optionList) {
+  //     setOptionList(optionList);
+  //   }
+  // }, []);
 
   useEffect(() => {
-    if (optionList.length !== 0) {
+    if (optionList.length !== 0 && !finish) {
       localStorage.setItem("optionList", JSON.stringify(optionList));
     }
   }, [optionList]);
@@ -47,6 +47,7 @@ function useOption() {
     const newList = optionList.map((item) => {
       if (item.optionIdx === currentIdx) {
         return { ...item, selected: !item.selected };
+        // item.selected = !item.selected;
       }
       return item;
     });

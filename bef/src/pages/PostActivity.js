@@ -17,14 +17,42 @@ const MAXIDX = 5;
 function PostActivity() {
   const [questionIdx, setQuestionIdx] = useState(0);
   const question = useQuestion(questionIdx, "postActivity");
-  const { addOption, selectOption, addText } = useOption();
-  const [optionList, setOptionList] = useState(
-    JSON.parse(localStorage.getItem("optionList"))
-  );
   const [finish, setFinish] = useState(false);
+  const { optionList, setOptionList, addOption, selectOption, addText } = useOption(finish);
+  // const [optionList, setOptionList] = useState(
+  //   JSON.parse(localStorage.getItem("optionList"))
+  // );
+ 
   const [openModal, setOpenModal] = useState(false);
   const [option, setOption] = useState("");
   const [Metrics, setMetrics] = useState({});
+
+  useEffect(() => {
+    const newList = JSON.parse(localStorage.getItem("optionList"));
+    if (newList) {
+      setOptionList(newList);
+    }
+  }, [openModal]);
+
+  useEffect(() => {
+    if (questionIdx > 1 && document.getElementById(question)) {
+      document.getElementById(question).value = "";
+    }
+  }, [questionIdx]);
+
+  useEffect(() => {
+    // load the question index from the local storage
+    const idx = JSON.parse(localStorage.getItem("idx"));
+    if (idx) {
+      setQuestionIdx(idx);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (questionIdx < MAXIDX) {
+      localStorage.setItem("idx", JSON.stringify(questionIdx));
+    }
+  }, [questionIdx]);
 
   const generateKey = (pre) => {
     return `${pre}_${new Date().getTime()}`;
@@ -54,15 +82,16 @@ function PostActivity() {
                   // toggle the selected class
                   // if the target is the label, toggle the parent element
                   // otherwise toggle the target element
+                  selectOption(item.optionIdx);
                   if (e.target.tagName === "LABEL") {
                     e.target.parentElement.classList.toggle("selected");
                   } else {
                     e.target.classList.toggle("selected");
                   }
-                  selectOption(item.optionIdx);
                 }}
               />
             ))}
+            
       </div>
       <Button
         className="addButton"
@@ -100,7 +129,8 @@ function PostActivity() {
       // save optionList to the backend
       // optionList is the response of the client
       setFinish(true);
-      storeOptionList(generateKey(""), optionList);
+      const key = generateKey("justinalovado");
+      storeOptionList(key, [...optionList, { preActivity: Metrics, postActivity: localStorage.getItem("sliderRecord") }]);
     }
   };
 
@@ -138,32 +168,7 @@ function PostActivity() {
     </div>
   );
 
-  useEffect(() => {
-    const newList = JSON.parse(localStorage.getItem("optionList"));
-    if (newList) {
-      setOptionList(newList);
-    }
-  }, [openModal]);
-
-  useEffect(() => {
-    if (questionIdx > 1 && document.getElementById(question)) {
-      document.getElementById(question).value = "";
-    }
-  }, [questionIdx]);
-
-  useEffect(() => {
-    // load the question index from the local storage
-    const idx = JSON.parse(localStorage.getItem("idx"));
-    if (idx) {
-      setQuestionIdx(idx);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (questionIdx < MAXIDX) {
-      localStorage.setItem("idx", JSON.stringify(questionIdx));
-    }
-  }, [questionIdx]);
+  
   if (finish) {
     localStorage.clear();
     return (
