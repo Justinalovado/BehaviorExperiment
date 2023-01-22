@@ -22,11 +22,18 @@ function PostActivity() {
   // const [optionList, setOptionList] = useState(
   //   JSON.parse(localStorage.getItem("optionList"))
   // );
- 
+  function Lastpage() {
+    localStorage.clear();
+    return (
+      <div className="PostActivity">
+        <Question question={"Thank you for your participation"} />
+      </div>
+    );
+  }
   const [openModal, setOpenModal] = useState(false);
   const [option, setOption] = useState("");
   const [Metrics, setMetrics] = useState({});
-
+  
   useEffect(() => {
     const newList = JSON.parse(localStorage.getItem("optionList"));
     if (newList) {
@@ -130,7 +137,7 @@ function PostActivity() {
       // optionList is the response of the client
       setFinish(true);
       const key = generateKey("justinalovado");
-      storeOptionList(key, [...optionList, { preActivity: Metrics, postActivity: localStorage.getItem("sliderRecord") }]);
+      storeOptionList(key, [...optionList, { preActivity: Metrics, postActivity: JSON.parse(localStorage.getItem("sliderRecord")) }]);
     }
   };
 
@@ -170,12 +177,9 @@ function PostActivity() {
 
   
   if (finish) {
-    localStorage.clear();
     return (
-      <div className="PostActivity">
-        <Question question={"Thank you for your participation"} />
-      </div>
-    );
+      <Lastpage />
+    )
   }
 
   return (

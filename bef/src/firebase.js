@@ -22,7 +22,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-export default function storeOptionList(userId, optionList) {
+export default function storeOptionList(path, optionList) {
   const db = getDatabase();
-  set(ref(db, "users/" + userId), optionList);
+  set(ref(db, path), optionList);
 }
