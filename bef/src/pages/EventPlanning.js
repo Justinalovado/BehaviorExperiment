@@ -7,12 +7,12 @@ import Option from "../components/Option";
 import Modal from "../components/Modal";
 import "./EventPlanning.css";
 import { Link } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 // optionList will be sent at the end as the response of the client (backend)
 // questionIdx is the index of the question
 // option is the answer to the question
-// addOption is a function that adds the answer to the optionList 
+// addOption is a function that adds the answer to the optionList
 // removeOption is a function that removes the answer from the optionList
 // openModal is a boolean that determines whether the modal is open or not
 // setOpenModal is a function that sets the openModalf to true or false
@@ -29,16 +29,19 @@ import { useNavigate } from 'react-router-dom';
 export default function EventPlanning() {
   const [questionIdx, setQuestionIdx] = useState(0);
   const question = useQuestion(questionIdx, "eventPlanning");
-  const { optionList, setOptionList, addOption, removeOption } = useOption();
+  const { optionList, setOptionList, selectOption, addOption, removeOption } =
+    useOption();
   const [openModal, setOpenModal] = useState(false);
   const [finish, setFinish] = useState(false);
   const [option, setOption] = useState("");
   const navigate = useNavigate();
   const generateKey = (pre) => {
-    return `${ pre }_${ new Date().getTime() }`;
-  }
+    return `${pre}_${new Date().getTime()}`;
+  };
 
-  const handleStart = () => {navigate("/PreActivity")}
+  const handleStart = () => {
+    navigate("/PreActivity");
+  };
 
   useEffect(() => {
     // load the question index from the local storage
@@ -47,7 +50,7 @@ export default function EventPlanning() {
       setQuestionIdx(idx);
     }
   }, []);
-  
+
   useEffect(() => {
     if (questionIdx < 3) {
       localStorage.setItem("idx", JSON.stringify(questionIdx));
@@ -61,13 +64,19 @@ export default function EventPlanning() {
     return (
       <div className="EventPlanning">
         <div className="finishMessage">
-          <span style={{fontSize: "1.4em"}}>Great job!</span>
+          <span style={{ fontSize: "1.4em" }}>Great job!</span>
           <p>We have saved your activity</p>
         </div>
-        <div className="option-container" style={{overflowY: "visible"}}>
-          <span style={{fontSize: "2em"}}><p>Would you like to:</p></span>
-          <Button className="addButton" text="Start Activity!" onClick={handleStart} />
-          <Button className="backToMenuButton" text="Back to Menu"/>
+        <div className="option-container" style={{ overflowY: "visible" }}>
+          <span style={{ fontSize: "2em" }}>
+            <p>Would you like to:</p>
+          </span>
+          <Button
+            className="addButton"
+            text="Start Activity!"
+            onClick={handleStart}
+          />
+          <Button className="backToMenuButton" text="Back to Menu" />
         </div>
       </div>
     );
@@ -87,21 +96,30 @@ export default function EventPlanning() {
       />
 
       <div className="options">
-        <div className="option-container"> 
-        {/* filter() for getting answers to the corresponding questions */}
-          { optionList.filter(item => item.question === question).map((item) => (
-            <Option key={item.optionIdx}
-              text={item.option}
-              removeOption={removeOption}
-              optionIdx={item.optionIdx}
+        <div className="option-container">
+          {/* filter() for getting answers to the corresponding questions */}
+          {optionList
+            .filter((item) => item.question === question)
+            .map((item) => (
+              <Option
+                key={item.optionIdx}
+                text={item.option}
+                className={item.selected ? "selected" : ""}
+                removeOption={removeOption}
+                optionIdx={item.optionIdx}
+                onClick={(e) => {
+                  if (questionIdx === 0) {
+                    selectOption(item.optionIdx);
+                  }
+                }}
               />
-          ))}
+            ))}
         </div>
         <Button
           className="addButton"
           text="Add New +"
           onClick={() => {
-            setOpenModal(true)
+            setOpenModal(true);
             setOption("");
           }}
         />
@@ -114,8 +132,7 @@ export default function EventPlanning() {
           onClick={() => {
             if (questionIdx < 2) {
               setQuestionIdx(questionIdx + 1);
-            }
-            else {
+            } else {
               // save optionList to the backend
               // optionList is the response of the client
               // setQuestionIdx(0) is for resetting the questionIdx
@@ -142,5 +159,3 @@ export default function EventPlanning() {
     </div>
   );
 }
-
-

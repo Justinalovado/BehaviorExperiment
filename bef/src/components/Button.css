@@ -18,6 +18,10 @@ button {
     align-items: center;
 }
 
+label {
+    cursor: pointer;
+}
+
 .button label {
     cursor: pointer;
     margin-right: auto;

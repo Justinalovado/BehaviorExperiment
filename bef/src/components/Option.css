@@ -20,6 +20,12 @@
 }
 
 label {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
     margin-right: auto;
     margin-left: auto;
     flex-shrink: 0; /* prevent label from shrinking beyond its fixed width */
@@ -28,6 +34,12 @@ label {
 
 
 img {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
     position: absolute;
     right: 0;
     margin-right: 20px;
@@ -75,4 +87,8 @@ img {
         -webkit-transform: translateX(-100%);
         transform: translateX(-100%);
     }
+}
+
+.selected {
+    background-color: purple;
 }
