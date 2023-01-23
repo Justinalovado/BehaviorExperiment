@@ -1,5 +1,6 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 
 import storeOptionList from "../firebase";
 import useQuestion from "../hooks/useQuestion";
@@ -19,7 +20,11 @@ function PostActivity() {
   const question = useQuestion(questionIdx, "postActivity");
   const [finish, setFinish] = useState(false);
   const { optionList, setOptionList, addOption, selectOption, addText } = useOption(finish);
-
+  const [openModal, setOpenModal] = useState(false);
+  const [option, setOption] = useState("");
+  const [Metrics, setMetrics] = useState({});
+  const navigate = useNavigate();
+  
   function Lastpage() {
     localStorage.clear();
     return (
@@ -28,10 +33,6 @@ function PostActivity() {
       </div>
     );
   }
-  const [openModal, setOpenModal] = useState(false);
-  const [option, setOption] = useState("");
-  const [Metrics, setMetrics] = useState({});
-
   // ---------------------- store the optionList to firebase ---------------------- //
   useEffect(() => {
     if (questionIdx === MAXIDX) {
@@ -43,12 +44,13 @@ function PostActivity() {
     }
   }, [optionList]);
   // ------------------------------------------------------------------------------ //
+
+  const newList = useMemo(() => JSON.parse(localStorage.getItem("optionList")), []);
   useEffect(() => {
-    const newList = JSON.parse(localStorage.getItem("optionList"));
     if (newList) {
       setOptionList(newList);
     }
-  }, [openModal]);
+  }, [newList]);
 
   useEffect(() => {
     if (questionIdx > 1 && document.getElementById(question)) {
@@ -68,6 +70,9 @@ function PostActivity() {
     if (questionIdx < MAXIDX) {
       localStorage.setItem("idx", JSON.stringify(questionIdx));
     }
+    else {
+      localStorage.clear();
+    }
   }, [questionIdx]);
 
   const generateKey = (pre) => {
@@ -79,46 +84,49 @@ function PostActivity() {
     "Compared to the initial predictions, what actually happened?",
     "What did you learn? What is a more realistic view about this situation",
   ];
-  const safety_behvs = (
-    <div className="options">
-      <div className="option-container">
-        {optionList &&
-          optionList
-            .filter(
-              (item) =>
-                item.question === "What would be your likely safety behaviour"
-            ) // filter the optionList to get the answers to the second question
-            .map((item) => (
-              <Button
-                key={item.optionIdx}
-                text={item.option}
-                className={item.selected ? "selected button" : "button"}
-                style={{ marginTop: "15px", maxWidth: "700px" }}
-                onClick={(e) => {
-                  // toggle the selected class
-                  // if the target is the label, toggle the parent element
-                  // otherwise toggle the target element
-                  selectOption(item.optionIdx);
-                  if (e.target.tagName === "LABEL") {
-                    e.target.parentElement.classList.toggle("selected");
-                  } else {
-                    e.target.classList.toggle("selected");
-                  }
-                }}
-              />
-            ))}
-            
+
+  const safety_behvs = useMemo(() => {
+    return (
+      <div className="options">
+        <div className="option-container">
+          {optionList &&
+            optionList
+              .filter(
+                (item) =>
+                  item.question === "What would be your likely safety behaviour"
+              ) // filter the optionList to get the answers to the second question
+              .map((item) => (
+                <Button
+                  key={item.optionIdx}
+                  text={item.option}
+                  className={item.selected ? "selected button" : "button"}
+                  style={{ marginTop: "15px", maxWidth: "700px" }}
+                  onClick={(e) => {
+                    // toggle the selected class
+                    // if the target is the label, toggle the parent element
+                    // otherwise toggle the target element
+                    selectOption(item.optionIdx);
+                    if (e.target.tagName === "LABEL") {
+                      e.target.parentElement.classList.toggle("selected");
+                    } else {
+                      e.target.classList.toggle("selected");
+                    }
+                  }}
+                />
+              ))}
+              
+        </div>
+        <Button
+          className="addButton"
+          text="Add New +"
+          onClick={() => {
+            setOpenModal(true);
+            setOption("");
+          }}
+        />
       </div>
-      <Button
-        className="addButton"
-        text="Add New +"
-        onClick={() => {
-          setOpenModal(true);
-          setOption("");
-        }}
-      />
-    </div>
-  );
+  )}, [optionList, selectOption]);
+
   const txt_box = (
     <div className="inputBox">
       <textarea
