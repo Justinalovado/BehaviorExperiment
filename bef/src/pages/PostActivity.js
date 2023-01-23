@@ -133,7 +133,7 @@ function PostActivity() {
     if (questionIdx < MAXIDX - 1) {
       setQuestionIdx(questionIdx + 1);
     } else {
-      // save optionList to the backend
+      // save optionList to firebase
       // optionList is the response of the client
       setFinish(true);
       const key = generateKey("justinalovado");
@@ -162,7 +162,7 @@ function PostActivity() {
     <div className="post-met-questions">
       {slide_questions.map((q, i) => {
         return (
-          <div className="met-questions">
+          <div key={q} className="met-questions">
             <p>{q}</p>
             <Slider
               curMetric={`met-${7 + i}`}
