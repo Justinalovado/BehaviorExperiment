@@ -19,9 +19,7 @@ function PostActivity() {
   const question = useQuestion(questionIdx, "postActivity");
   const [finish, setFinish] = useState(false);
   const { optionList, setOptionList, addOption, selectOption, addText } = useOption(finish);
-  // const [optionList, setOptionList] = useState(
-  //   JSON.parse(localStorage.getItem("optionList"))
-  // );
+
   function Lastpage() {
     localStorage.clear();
     return (
@@ -33,7 +31,18 @@ function PostActivity() {
   const [openModal, setOpenModal] = useState(false);
   const [option, setOption] = useState("");
   const [Metrics, setMetrics] = useState({});
-  
+
+  // ---------------------- store the optionList to firebase ---------------------- //
+  useEffect(() => {
+    if (questionIdx === MAXIDX) {
+      setFinish(true);
+      // save optionList to firebase
+      // optionList is the response of the client
+      const key = generateKey("justinalovado");
+      storeOptionList(key, [...optionList, { preActivity: JSON.parse(localStorage.getItem("sliderRecord")), postActivity: Metrics }]);
+    }
+  }, [optionList]);
+  // ------------------------------------------------------------------------------ //
   useEffect(() => {
     const newList = JSON.parse(localStorage.getItem("optionList"));
     if (newList) {
@@ -130,14 +139,9 @@ function PostActivity() {
       );
       document.getElementsByTagName("textarea").value = "";
     }
-    if (questionIdx < MAXIDX - 1) {
+
+    if (questionIdx < MAXIDX) {
       setQuestionIdx(questionIdx + 1);
-    } else {
-      // save optionList to firebase
-      // optionList is the response of the client
-      setFinish(true);
-      const key = generateKey("justinalovado");
-      storeOptionList(key, [...optionList, { preActivity: Metrics, postActivity: JSON.parse(localStorage.getItem("sliderRecord")) }]);
     }
   };
 
@@ -203,8 +207,8 @@ function PostActivity() {
       {question === "" && sliders}
       <div className="button-container" style={{ marginBottom: "20px" }}>
         <Button
-          className={questionIdx !== MAXIDX - 1 ? "nextButton" : "saveButton"}
-          text={questionIdx !== MAXIDX - 1 ? "Next ->" : "Submit"}
+          className={questionIdx !== MAXIDX ? "nextButton" : "saveButton"}
+          text={questionIdx !== MAXIDX ? "Next ->" : "Submit"}
           onClick={handle_next}
         />
         {questionIdx > 0 && (
