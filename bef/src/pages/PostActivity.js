@@ -19,14 +19,21 @@ function PostActivity() {
   const [questionIdx, setQuestionIdx] = useState(0);
   const question = useQuestion(questionIdx, "postActivity");
   const [finish, setFinish] = useState(false);
-  const { optionList, setOptionList, addOption, selectOption, addText } = useOption(finish);
+  const {
+    optionList,
+    setOptionList,
+    addOption,
+    selectOption,
+    addText,
+    activityList,
+  } = useOption(finish);
   const [openModal, setOpenModal] = useState(false);
   const [option, setOption] = useState("");
   const [Metrics, setMetrics] = useState({});
   const navigate = useNavigate();
-  
+
   function Lastpage() {
-    localStorage.clear();
+    localStorage.removeItem("idx");
     return (
       <div className="PostActivity">
         <Question question={"Thank you for your participation"} />
@@ -39,13 +46,24 @@ function PostActivity() {
       setFinish(true);
       // save optionList to firebase
       // optionList is the response of the client
-      const key = generateKey("justinalovado");
-      storeOptionList(key, [...optionList, { preActivity: JSON.parse(localStorage.getItem("sliderRecord")), postActivity: Metrics }]);
+      const key = generateKey("the_new_design");
+      storeOptionList(key, {
+        ...optionList,
+        activity: activityList.find((activity) => activity.selected === true)
+          .activity,
+        metrics: {
+          ...Metrics,
+          ...JSON.parse(localStorage.getItem("sliderRecord"))
+        },
+      });
     }
   }, [optionList]);
   // ------------------------------------------------------------------------------ //
 
-  const newList = useMemo(() => JSON.parse(localStorage.getItem("optionList")), []);
+  const newList = useMemo(
+    () => JSON.parse(localStorage.getItem("optionList")),
+    []
+  );
   useEffect(() => {
     if (newList) {
       setOptionList(newList);
@@ -66,14 +84,13 @@ function PostActivity() {
     }
   }, []);
 
-  useEffect(() => {
-    if (questionIdx < MAXIDX) {
-      localStorage.setItem("idx", JSON.stringify(questionIdx));
-    }
-    else {
-      localStorage.clear();
-    }
-  }, [questionIdx]);
+  // useEffect(() => {
+  //   if (questionIdx < MAXIDX) {
+  //     localStorage.setItem("idx", JSON.stringify(questionIdx));
+  //   } else {
+  //     localStorage.clear();
+  //   }
+  // }, [questionIdx]);
 
   const generateKey = (pre) => {
     return `${pre}_${new Date().getTime()}`;
@@ -89,32 +106,26 @@ function PostActivity() {
     return (
       <div className="options">
         <div className="option-container">
-          {optionList &&
-            optionList
-              .filter(
-                (item) =>
-                  item.question === "What would be your likely safety behaviour"
-              ) // filter the optionList to get the answers to the second question
-              .map((item) => (
-                <Button
-                  key={item.optionIdx}
-                  text={item.option}
-                  className={item.selected ? "selected button" : "button"}
-                  style={{ marginTop: "15px", maxWidth: "700px" }}
-                  onClick={(e) => {
-                    // toggle the selected class
-                    // if the target is the label, toggle the parent element
-                    // otherwise toggle the target element
-                    selectOption(item.optionIdx);
-                    if (e.target.tagName === "LABEL") {
-                      e.target.parentElement.classList.toggle("selected");
-                    } else {
-                      e.target.classList.toggle("selected");
-                    }
-                  }}
-                />
-              ))}
-              
+          {optionList["safety_behaviour"] &&
+            optionList["safety_behaviour"].map((item) => (
+              <Button
+                key={item.optionIdx}
+                text={item.option}
+                className={item.selected ? "selected button" : "button"}
+                style={{ marginTop: "15px", maxWidth: "700px" }}
+                onClick={(e) => {
+                  // toggle the selected class
+                  // if the target is the label, toggle the parent element
+                  // otherwise toggle the target element
+                  selectOption(item.optionIdx);
+                  if (e.target.tagName === "LABEL") {
+                    e.target.parentElement.classList.toggle("selected");
+                  } else {
+                    e.target.classList.toggle("selected");
+                  }
+                }}
+              />
+            ))}
         </div>
         <Button
           className="addButton"
@@ -125,7 +136,8 @@ function PostActivity() {
           }}
         />
       </div>
-  )}, [optionList, selectOption]);
+    );
+  }, [optionList, selectOption]);
 
   const txt_box = (
     <div className="inputBox">
@@ -140,11 +152,7 @@ function PostActivity() {
   const handle_next = () => {
     // optionIdx is (question + key) not (answer + key)
     if (text_question.includes(question)) {
-      addText(
-        document.getElementById(question).value,
-        question,
-        generateKey(question)
-      );
+      addText(document.getElementById(question).value, questionIdx);
       document.getElementsByTagName("textarea").value = "";
     }
 
@@ -187,11 +195,8 @@ function PostActivity() {
     </div>
   );
 
-  
   if (finish) {
-    return (
-      <Lastpage />
-    )
+    return <Lastpage />;
   }
 
   return (

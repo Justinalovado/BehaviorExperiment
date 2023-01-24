@@ -29,16 +29,16 @@ import { useNavigate } from "react-router-dom";
 export default function EventPlanning() {
   const [questionIdx, setQuestionIdx] = useState(0);
   const question = useQuestion(questionIdx, "eventPlanning");
-  const { optionList, setOptionList, selectOption, addOption, removeOption } =
-    useOption();
+  const { optionList, activityList, selectActivity, addOption, removeOption, removeActivity, addActivity } = useOption(question);
   const [openModal, setOpenModal] = useState(false);
   const [finish, setFinish] = useState(false);
   const [option, setOption] = useState("");
+  
   const navigate = useNavigate();
   const generateKey = (pre) => {
-    return `${pre}_${new Date().getTime()}`;
+  
+    return parseInt(`${new Date().getTime()}`, 10);
   };
-
   const handleStart = () => {
     navigate("/PreActivity");
   };
@@ -91,27 +91,46 @@ export default function EventPlanning() {
         option={option}
         onTextChange={(text) => setOption(text)}
         addOption={addOption}
+        addActivity={addActivity}
         question={question}
-        optionIdx={generateKey(option)}
+        optionIdx={generateKey("")}
       />
 
       <div className="options">
         <div className="option-container">
           {/* filter() for getting answers to the corresponding questions */}
-          {optionList
-            .filter((item) => item.question === question)
+          { question === "What is the activity" && activityList && activityList.map((item) => (
+              <Option
+                key={item.optionIdx}
+                optionIdx={item.optionIdx}
+                text={item.activity}
+                style={{ cursor: "pointer" }}
+                className={item.selected ? "selected" : ""}
+                remove={removeActivity}
+                question={question}
+                onClick={(e) => {
+                  selectActivity(item.optionIdx);
+                }}
+              />
+            ))}
+          { (question === "What would be your likely safety behaviour" && optionList["safety_behaviour"]) && optionList["safety_behaviour"]
             .map((item) => (
               <Option
                 key={item.optionIdx}
                 text={item.option}
-                className={item.selected ? "selected" : ""}
-                removeOption={removeOption}
+                question={question}
+                remove={removeOption}
                 optionIdx={item.optionIdx}
-                onClick={(e) => {
-                  if (questionIdx === 0) {
-                    selectOption(item.optionIdx);
-                  }
-                }}
+              />
+            ))}
+          { (question === "What is your worst fear?" && optionList["worst_fear"]) && optionList["worst_fear"]
+            .map((item) => (
+              <Option
+                key={item.optionIdx}
+                text={item.option}
+                question={question}
+                remove={removeOption}
+                optionIdx={item.optionIdx}
               />
             ))}
         </div>

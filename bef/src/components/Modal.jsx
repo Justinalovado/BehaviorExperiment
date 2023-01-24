@@ -2,9 +2,9 @@ import React from "react";
 import "./Modal.css";
 import Button from "./Button";
 
-function Modal({ open, onClose, option, onTextChange, addOption, question, optionIdx }) {
+function Modal({ open, onClose, option, onTextChange, addOption, addActivity, question, optionIdx }) {
   if (!open) return null;
-
+  
   return (
     <div className="overlay">
       <div className="modalContainer">
@@ -17,7 +17,12 @@ function Modal({ open, onClose, option, onTextChange, addOption, question, optio
         <div className="content">
           <input className="answerBox" type="text" onChange={(e) => onTextChange(e.target.value)}/>
           <Button className="saveBtn" text="Save" onClick={() => {
-              addOption(option, question, optionIdx);
+              if (question === "What is the activity") {
+                addActivity(option, optionIdx);
+              }
+              else {
+                addOption(option, optionIdx, question);
+              }
               onClose();
             }} />
         </div>

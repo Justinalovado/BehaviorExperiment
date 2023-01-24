@@ -41,7 +41,7 @@ function PreActivity() {
     if (Part + 1 < section.length) {
       setPart(Part + 1);
     } else {
-      // saveMetrics();
+      saveMetrics();
       navigate("/PostActivity");
     }
   };

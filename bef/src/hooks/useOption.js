@@ -1,7 +1,17 @@
 import { useState, useEffect } from "react";
 
 function useOption(finish) {
-  const [optionList, setOptionList] = useState(JSON.parse(localStorage.getItem("optionList") || "[]"));
+  const [optionList, setOptionList] = useState(
+    (JSON.parse(
+      localStorage.getItem("optionList")) ||
+      {safety_behaviour: [], worst_fear: [], txt_Q1: "", txt_Q2: "", txt_Q3: ""}
+    )
+  );
+  const [activityList, setActivityList] = useState(
+    JSON.parse(localStorage.getItem("activityList") || "[]")
+  );
+
+  // localStorage used to store items on page refresh
   // ----------------localStorage part--------------------- //
   // useEffect(() => {
   //   const optionList = JSON.parse(localStorage.getItem("optionList"));
@@ -9,53 +19,123 @@ function useOption(finish) {
   //     setOptionList(optionList);
   //   }
   // }, []);
-
   useEffect(() => {
-    if (optionList.length !== 0 && !finish) {
-      localStorage.setItem("optionList", JSON.stringify(optionList));
-    }
+    console.log("activityList: ", activityList);
+    localStorage.setItem("activityList", JSON.stringify(activityList));
+    
+  }, [activityList]);
+  
+  useEffect(() => {
+    console.log("optionList: ", optionList);
+
+    localStorage.setItem("optionList", JSON.stringify(optionList));
+    
   }, [optionList]);
+  // useEffect(() => {
+  //   if (!finish) {
+  //     console.log("updated");
+  //     localStorage.setItem("optionList", JSON.stringify(optionList));
+  //     localStorage.setItem("activityList", JSON.stringify(activityList));
+  //   }
+  // }, [optionList, activityList, finish]);
 
   // ------------------------------------------------------ //
-  const addOption = (option, question, optionIdx) => {
-    setOptionList([
-      ...optionList,
-      { question: question, option: option, optionIdx: optionIdx, selected: false},
+  const addActivity = (activity, optionIdx) => {
+    setActivityList([
+      ...activityList,
+      { activity: activity, selected: false, optionIdx: optionIdx },
     ]);
   };
-  const addText = (option, question, optionIdx) => {
-    const target = optionList.find((item) => item.question === question);
-    if (target){
-      setOptionList(optionList.map((item) => {
-        if (item.question === question) {
-          return { ...item, option: option, optionIdx: optionIdx };
-        }
-        return item;
-      }));
+
+  const addOption = (option, optionIdx, question) => {
+    switch (question) {
+      case "What would be your likely safety behaviour":
+        setOptionList({...optionList, safety_behaviour:[
+          ...optionList["safety_behaviour"],
+          { option: option, optionIdx: optionIdx, selected: false },
+        ]});
+        break;
+        
+      case "What is your worst fear?":
+        setOptionList({...optionList, worst_fear:[
+          ...optionList["worst_fear"],
+          { option: option, optionIdx: optionIdx, selected: false },
+        ]});
+        break;
+
+      default:
+        break;
     }
-    else {
-      addOption(option, question, optionIdx);
-    }
-  }
-  const removeOption = (currentIdx) => {
-    const newList = optionList.filter((item) => item.optionIdx !== currentIdx);
-    setOptionList(optionList.filter((item) => item.optionIdx !== currentIdx));
-    localStorage.setItem("optionList", JSON.stringify(newList)); // update localStorage even when optionList has one item only
+  };
+  
+  const addText = (option, questionIdx) => {
+    setOptionList({...optionList, [`txt_Q${questionIdx-1}`]: option})
   };
 
-  const selectOption = (currentIdx) => {
-    const newList = optionList.map((item) => {
-      if (item.optionIdx === currentIdx) {
-        return { ...item, selected: !item.selected };
-        // item.selected = !item.selected;
+  const removeActivity = (currentIdx) => {
+    const newList = activityList.filter(
+      (item) => item.optionIdx !== currentIdx
+    );
+    setActivityList(newList);
+    // localStorage.setItem("activityList", JSON.stringify(newList));
+  };
+
+  const removeOption = (currentIdx, question) => {
+    switch(question) {
+      case "What would be your likely safety behaviour":
+        setOptionList({...optionList, safety_behaviour: optionList["safety_behaviour"].filter((item) => item.optionIdx !== currentIdx)});
+        break;
+      case "What is your worst fear?":
+        setOptionList({...optionList, worst_fear: optionList["worst_fear"].filter((item) => item.optionIdx !== currentIdx)});
+        break;
+      default:
+        break;
+    }
+  };
+
+  const selectActivity = (optionIdx) => {
+    const newList = activityList.map((item) => {
+      item.selected = false;
+      return item;
+    });
+    newList.map((item) => {
+      if (item.optionIdx === optionIdx) {
+        item.selected = true;
       }
       return item;
     });
+    setActivityList(newList);
+  };
+  const selectOption = (optionIdx) => {
+    // const newList = optionList["safety_behaviour"].map((item) => {
+    //   if (item.optionIdx === optionIdx) {
+    //     return { ...item, selected: !item.selected };
+    //   }
+    //   return item;
+    // });
+    const newList = {...optionList, safety_behaviour: optionList["safety_behaviour"].map((item) => {
+      if (item.optionIdx === optionIdx) {
+        return { ...item, selected: !item.selected };
+      }
+      return item;
+    }
+    )};
     setOptionList(newList);
     localStorage.setItem("optionList", JSON.stringify(newList));
   };
 
-  return { optionList, setOptionList, addOption, removeOption, selectOption, addText };
+  return {
+    optionList,
+    activityList,
+    setOptionList,
+    addOption,
+    removeOption,
+    removeActivity,
+    selectOption,
+    addText,
+    selectActivity,
+    addActivity,
+  };
 }
 
 export default useOption;
