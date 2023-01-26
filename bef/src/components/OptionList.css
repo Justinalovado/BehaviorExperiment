@@ -1,0 +1,30 @@
+.optionlist-container{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    height: 75vh;
+}
+
+.optionlist-container ul{
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    height: 60vh;
+    width: 100vw;
+    overflow-y: scroll;
+}
+
+.optionlist-container li{
+    display: flex;
+    align-items: center;
+    align-self: center;
+}
+
+.optionlist-container .add-opt-btn{
+    position: absolute;
+    bottom: 0;
+}

@@ -12,12 +12,12 @@ function PreActivity() {
   const NEXT_TXT = "Next ->";
   const PREV_TXT = "<- Prev";
 
-  useEffect(() => {
-    const newMetrics = JSON.parse(localStorage.getItem("sliderRecord"));
-    if (newMetrics) {
-      setMetrics(newMetrics);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const newMetrics = JSON.parse(localStorage.getItem("sliderRecord"));
+  //   if (newMetrics) {
+  //     setMetrics(newMetrics);
+  //   }
+  // }, []);
 
   useEffect(() => {
     if (Metrics.length !== 0) {
