@@ -2,11 +2,13 @@ import React from 'react'
 import { useState } from 'react'
 import OptionList from '../components/OptionList'
 import "./ReEventPlanning.css"
+import { useNavigate } from 'react-router-dom'
 
 export default function ReEventPlanning() {
   const [part, setPart] = useState(0)
   const NEXT_TXT = "Next ->";
   const PREV_TXT = "<- Prev";
+  const navigate = useNavigate();
   const section = [
     (
       <div>
@@ -38,6 +40,8 @@ export default function ReEventPlanning() {
     }
     if (part<section.length - 1){
       setPart(part + 1);
+    }else{
+      navigate("/preActivity")
     }
   }
 

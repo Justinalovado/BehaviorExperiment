@@ -16,6 +16,7 @@
     height: 60vh;
     width: 100vw;
     overflow-y: scroll;
+    row-gap: 5px;
 }
 
 .optionlist-container li{
@@ -27,4 +28,26 @@
 .optionlist-container .add-opt-btn{
     position: absolute;
     bottom: 0;
+}
+
+.optionlist-container .option {
+    position: relative;
+    max-width: 280px;
+    margin-top: 0;
+    overflow: hidden;
+}
+
+.optionlist-container .option:hover {
+    height: 100%;
+}
+
+.optionlist-container .option:hover span{
+    position: absolute;
+    left: 100%;
+    animation: my-animation 10s linear infinite;
+}
+
+@keyframes my-animation {
+    from { left: 50%; }
+    to { left: -100%; }
 }

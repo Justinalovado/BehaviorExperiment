@@ -66,7 +66,10 @@ class OptionList extends React.Component {
           {this.state.options.map((opt, index) => (
             <li key={index}>
               <button onClick={() => this.selectOption(index)} 
-                      style={{backgroundColor: opt.selected ? 'purple' : 'inherit'}}>{opt.option}</button>
+                      style={{backgroundColor: opt.selected ? 'purple' : 'inherit'}}
+                      className="option">
+                        <span>{opt.option}</span>
+              </button>
               <button onClick={() => this.deleteOption(index)}>Delete</button>
             </li>
           ))}
