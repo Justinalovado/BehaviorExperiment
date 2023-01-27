@@ -4,7 +4,7 @@ import OptionList from '../components/OptionList'
 import "./ReEventPlanning.css"
 
 export default function ReEventPlanning() {
-  const [part, setPart] = useState(1)
+  const [part, setPart] = useState(0)
   const NEXT_TXT = "Next ->";
   const PREV_TXT = "<- Prev";
   const section = [
@@ -18,10 +18,24 @@ export default function ReEventPlanning() {
         <h1>What are your likely safety behavirour</h1>
         <OptionList key={2} name="safe-behv" single={false} />
       </div>
+    ),(
+      <div>
+        <h1>What is your worst fear</h1>
+        <OptionList key={3} name="fear" single={false} />
+      </div>
     )
   ]
 
+  function countAct(lst) {
+    return lst.filter( obj => obj.selected === true).length
+  }
+
   function handleNext() {
+    let lst = JSON.parse(localStorage.getItem("activity"));
+    let len_act = countAct(lst);
+    if (part === 0 && len_act < 1 ){
+      return
+    }
     if (part<section.length - 1){
       setPart(part + 1);
     }

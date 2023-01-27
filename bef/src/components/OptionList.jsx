@@ -58,14 +58,15 @@ class OptionList extends React.Component {
     localStorage.setItem(this.state.name, JSON.stringify(this.state.options))
   }
 
-
   render() {
+
     return (
       <div className="optionlist-container">
         <ul>
           {this.state.options.map((opt, index) => (
             <li key={index}>
-              <button onClick={() => this.selectOption(index)}>{opt.option}</button>
+              <button onClick={() => this.selectOption(index)} 
+                      style={{backgroundColor: opt.selected ? 'purple' : 'inherit'}}>{opt.option}</button>
               <button onClick={() => this.deleteOption(index)}>Delete</button>
             </li>
           ))}
@@ -73,7 +74,7 @@ class OptionList extends React.Component {
         {this.state.showOverlay && 
           <Overlay 
             onConfirm={(input) => {this.addOption(input);this.toggleOverlay()}} 
-            onCancel={() => this.setState({showOverlay: false})}/>}
+            onCancel={() => this.toggleOverlay()}/>}
         <button className="add-opt-btn" onClick={() => this.toggleOverlay()}>Add option</button>
       </div>
     );
