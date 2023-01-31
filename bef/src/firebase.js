@@ -1,4 +1,4 @@
-const { getDatabase, ref, set } = require("firebase/database");
+const { getDatabase, ref, set, get } = require("firebase/database");
 // Import the functions you need from the SDKs you need
 const { initializeApp } = require("firebase/app");
 const { getAnalytics } = require("firebase/analytics");
@@ -25,4 +25,18 @@ const app = initializeApp(firebaseConfig);
 export default function storeOptionList(path, optionList) {
   const db = getDatabase();
   set(ref(db, path), optionList);
+};
+
+export function getOptionList(path) {
+  const db = getDatabase();
+  return new Promise((resolve, reject) => {
+    ref(db, path)
+      .once("value")
+      .then(snapshot => {
+        resolve(snapshot.val());
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
 }
