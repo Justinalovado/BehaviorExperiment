@@ -1,0 +1,49 @@
+import React, { useState } from "react";
+import { getOptionList } from "../firebase";
+import "firebase/database";
+
+const Query = () => {
+  const [key, setKey] = useState("");
+  const [options, setOptions] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (event) => {
+    setKey(event.target.value);
+  };
+
+
+	function handleSubmit(event) {
+		event.preventDefault();
+		setError(null);
+		setLoading(true);
+		getOptionList(key).then(
+			(data) => {setOptions(data);setLoading(false)}
+		).catch(
+			(error) => {
+				setError(error);
+				setLoading(false);
+				setOptions()
+			}
+		)
+	}
+
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={key}
+          onChange={handleChange}
+          placeholder="Enter Key"
+        />
+        <button type="submit">Get Record</button>
+      </form>
+      {loading && <p>Loading...</p>}
+      {error && <p>Error: {error}</p>}
+      {options && <p>{JSON.stringify(options)}</p>}
+    </div>
+  );
+};
+
+export default Query;
