@@ -8,7 +8,6 @@ import Button from "../components/Button";
 import Option from "../components/Option";
 import Modal from "../components/Modal";
 import "./EventPlanning.css";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 // optionList will be sent at the end as the response of the client (backend)
@@ -51,7 +50,7 @@ export default function EventPlanning() {
   const handleStart = () => {
     navigate("/PreActivity");
   };
-
+  
   useEffect(() => {
     // load the question index from the local storage
     const idx = JSON.parse(localStorage.getItem("idx"));
@@ -67,6 +66,16 @@ export default function EventPlanning() {
   }, [questionIdx]);
 
   // ---------------------------button components --------------------------- //
+  const CancelButton = () => {
+    return (
+      <Button 
+        className="cancelButton" 
+        text="Cancel" 
+        onClick={() => navigate("/")} 
+      />
+    );
+  };
+
   const NextButton = () => {
     return (
       <Button
@@ -139,7 +148,7 @@ export default function EventPlanning() {
             text="Start Activity!"
             onClick={handleStart}
           />
-          <Button className="backToMenuButton" text="Back to Menu" />
+          <Button className="backToMenuButton" text="Back to Menu" onClick={() => navigate("/")} />
         </div>
       </div>
     );
@@ -211,7 +220,8 @@ export default function EventPlanning() {
       <div className="button-container">
         <NextButton />
         {questionIdx > 0 && <PrevButton />}
-        <Button className="cancelButton" text={"Cancel"} />
+        {/* <Button className="cancelButton" text={"Cancel"} /> */}
+        <CancelButton />
       </div>
     </div>
   );
