@@ -63,7 +63,7 @@ export default function EventPlanning() {
           if (activityList.length === 0) {
             // alert("Please add an activity");
             MySwal.fire({
-              html: '<span style="font-family: "Inter";"><strong>Please Add an activity</strong></span>',
+              html: '<span style="font-family: "Inter";"><strong>Please add an activity</strong></span>',
               icon: "error",
               confirmButtonText: "OK",
             });
@@ -72,7 +72,7 @@ export default function EventPlanning() {
             undefined
           ) {
             MySwal.fire({
-              html: '<span style="font-family: "Inter";"><strong>Please Select an activity</strong></span>',
+              html: '<span style="font-family: "Inter";"><strong>Please select an activity</strong></span>',
               icon: "error",
               confirmButtonText: "OK",
             });
