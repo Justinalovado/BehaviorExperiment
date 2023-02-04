@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 import useQuestion from "../hooks/useQuestion";
 import useOption from "../hooks/useOption";
 import Question from "../components/Question";
@@ -27,6 +29,7 @@ import { useNavigate } from "react-router-dom";
 // useEffect is called when the optionList is changed
 
 export default function EventPlanning() {
+  const MySwal = withReactContent(Swal);
   const [questionIdx, setQuestionIdx] = useState(0);
   const question = useQuestion(questionIdx, "eventPlanning");
   const {
@@ -50,7 +53,7 @@ export default function EventPlanning() {
     navigate("/PreActivity");
   };
 
-// ---------------------------button components --------------------------- //
+  // ---------------------------button components --------------------------- //
   const NextButton = () => {
     return (
       <Button
@@ -58,12 +61,22 @@ export default function EventPlanning() {
         text={questionIdx !== 2 ? "Next ->" : "Save"}
         onClick={() => {
           if (activityList.length === 0) {
-            alert("Please add an activity");
-          }
-          else if(activityList.find((activity) => activity.selected === true) === undefined) {
-            alert("Please select an activity");
-          }
-          else {
+            // alert("Please add an activity");
+            MySwal.fire({
+              html: '<span style="font-family: "Inter";"><strong>Please Add an activity</strong></span>',
+              icon: "error",
+              confirmButtonText: "OK",
+            });
+          } else if (
+            activityList.find((activity) => activity.selected === true) ===
+            undefined
+          ) {
+            MySwal.fire({
+              html: '<span style="font-family: "Inter";"><strong>Please Select an activity</strong></span>',
+              icon: "error",
+              confirmButtonText: "OK",
+            });
+          } else {
             if (questionIdx < 2) {
               setQuestionIdx(questionIdx + 1);
             } else {
@@ -91,7 +104,7 @@ export default function EventPlanning() {
       />
     );
   };
-// ---------------------------button components --------------------------- //
+  // ---------------------------button components --------------------------- //
   useEffect(() => {
     // load the question index from the local storage
     const idx = JSON.parse(localStorage.getItem("idx"));
@@ -197,7 +210,6 @@ export default function EventPlanning() {
         />
       </div>
 
-  
       <div className="button-container">
         <NextButton />
         {questionIdx > 0 && <PrevButton />}
