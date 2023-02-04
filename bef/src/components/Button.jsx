@@ -11,7 +11,7 @@ function Button({ text, className = "", onClick, style }) {
       onClick={onClick}
       style={style}
     >
-      {(width <= 600 && text.length > 30) || text.length > 76 ? (
+      {(width <= 600 && text.length > 25) || text.length > 45 ? (
         <label id="rollText">{text}</label>
       ) : (
         <label>{text}</label>
