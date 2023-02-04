@@ -220,8 +220,8 @@ function PostActivity() {
       {question === "" && sliders}
       <div className="button-container" style={{ marginBottom: "20px" }}>
         <Button
-          className={questionIdx !== MAXIDX ? "nextButton" : "saveButton"}
-          text={questionIdx !== MAXIDX ? "Next ->" : "Submit"}
+          className={questionIdx !== MAXIDX-1 ? "nextButton" : "saveButton"}
+          text={questionIdx !== MAXIDX-1 ? "Next ->" : "Submit"}
           onClick={handle_next}
         />
         {questionIdx > 0 && (
