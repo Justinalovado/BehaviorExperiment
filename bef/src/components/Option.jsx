@@ -7,20 +7,15 @@ import "./Option.css";
 
 // text means option text
 function Option({ text, className = "", remove, optionIdx, question, onClick, style }) {
-  const { height, width } = useWindowDimensions();
-  const [option, setOption] = useState("Option");
-  useEffect(() => {
-    if (text) {
-      setOption(text);
-    }
-  }, [text]);
+  const { width } = useWindowDimensions();
+  
   
   return (
     <div className={`${className} option`} style={style} id={optionIdx} onClick={onClick}>
-      {(width <= 600 && option.length > 30) || option.length > 76 ? (
-        <label style={style} id="rollText">{option}</label>
+      {(width <= 600 && text.length > 25) || text.length > 45 ? (
+        <label style={style} id="rollText">{text}</label>
       ) : (
-        <label style={style}>{option}</label>
+        <label style={style}>{text}</label>
       )}
       {className === "selected" ? (<img
         src={trash2}

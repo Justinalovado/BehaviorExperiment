@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 import useQuestion from "../hooks/useQuestion";
 import useOption from "../hooks/useOption";
 import Question from "../components/Question";
@@ -6,7 +8,6 @@ import Button from "../components/Button";
 import Option from "../components/Option";
 import Modal from "../components/Modal";
 import "./EventPlanning.css";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 // optionList will be sent at the end as the response of the client (backend)
@@ -27,22 +28,29 @@ import { useNavigate } from "react-router-dom";
 // useEffect is called when the optionList is changed
 
 export default function EventPlanning() {
+  const MySwal = withReactContent(Swal);
   const [questionIdx, setQuestionIdx] = useState(0);
   const question = useQuestion(questionIdx, "eventPlanning");
-  const { optionList, activityList, selectActivity, addOption, removeOption, removeActivity, addActivity } = useOption(question);
+  const {
+    optionList,
+    activityList,
+    selectActivity,
+    addOption,
+    removeOption,
+    removeActivity,
+    addActivity,
+  } = useOption(question);
   const [openModal, setOpenModal] = useState(false);
   const [finish, setFinish] = useState(false);
-  const [option, setOption] = useState("");
-  
+
   const navigate = useNavigate();
   const generateKey = (pre) => {
-  
     return parseInt(`${new Date().getTime()}`, 10);
   };
   const handleStart = () => {
     navigate("/PreActivity");
   };
-
+  
   useEffect(() => {
     // load the question index from the local storage
     const idx = JSON.parse(localStorage.getItem("idx"));
@@ -56,6 +64,70 @@ export default function EventPlanning() {
       localStorage.setItem("idx", JSON.stringify(questionIdx));
     }
   }, [questionIdx]);
+
+  // ---------------------------button components --------------------------- //
+  const CancelButton = () => {
+    return (
+      <Button 
+        className="cancelButton" 
+        text="Cancel" 
+        onClick={() => navigate("/")} 
+      />
+    );
+  };
+
+  const NextButton = () => {
+    return (
+      <Button
+        className={questionIdx !== 2 ? "nextButton" : "saveButton"}
+        text={questionIdx !== 2 ? "Next ->" : "Save"}
+        onClick={() => {
+          if (activityList.length === 0) {
+            // alert("Please add an activity");
+            MySwal.fire({
+              html: '<span style="font-family: "Inter";"><strong>Please add an activity</strong></span>',
+              icon: "error",
+              confirmButtonText: "OK",
+            });
+          } else if (
+            activityList.find((activity) => activity.selected === true) ===
+            undefined
+          ) {
+            MySwal.fire({
+              html: '<span style="font-family: "Inter";"><strong>Please select an activity</strong></span>',
+              icon: "error",
+              confirmButtonText: "OK",
+            });
+          } else {
+            if (questionIdx < 2) {
+              setQuestionIdx(questionIdx + 1);
+            } else {
+              // save optionList to the backend
+              // optionList is the response of the client
+              // setQuestionIdx(0) is for resetting the questionIdx
+              setFinish(true);
+              localStorage.removeItem("idx");
+            }
+          }
+        }}
+      />
+    );
+  };
+  const PrevButton = () => {
+    return (
+      <Button
+        className="prevButton"
+        text={"<- Prev"}
+        onClick={() => {
+          if (questionIdx > 0) {
+            setQuestionIdx(questionIdx - 1);
+          }
+        }}
+      />
+    );
+  };
+  // ---------------------------button components --------------------------- //
+  
 
   // finish is a boolean that determines whether the client has finished the activity or not
   // if finish is true, the client will see the finishMessage
@@ -76,7 +148,7 @@ export default function EventPlanning() {
             text="Start Activity!"
             onClick={handleStart}
           />
-          <Button className="backToMenuButton" text="Back to Menu" />
+          <Button className="backToMenuButton" text="Back to Menu" onClick={() => navigate("/")} />
         </div>
       </div>
     );
@@ -88,8 +160,6 @@ export default function EventPlanning() {
       <Modal
         open={openModal}
         onClose={() => setOpenModal(false)}
-        option={option}
-        onTextChange={(text) => setOption(text)}
         addOption={addOption}
         addActivity={addActivity}
         question={question}
@@ -99,7 +169,9 @@ export default function EventPlanning() {
       <div className="options">
         <div className="option-container">
           {/* filter() for getting answers to the corresponding questions */}
-          { question === "What is the activity" && activityList && activityList.map((item) => (
+          {question === "What is the activity" &&
+            activityList &&
+            activityList.map((item) => (
               <Option
                 key={item.optionIdx}
                 optionIdx={item.optionIdx}
@@ -113,8 +185,9 @@ export default function EventPlanning() {
                 }}
               />
             ))}
-          { (question === "What would be your likely safety behaviour" && optionList["safety_behaviour"]) && optionList["safety_behaviour"]
-            .map((item) => (
+          {question === "What would be your likely safety behaviour" &&
+            optionList["safety_behaviour"] &&
+            optionList["safety_behaviour"].map((item) => (
               <Option
                 key={item.optionIdx}
                 text={item.option}
@@ -123,8 +196,9 @@ export default function EventPlanning() {
                 optionIdx={item.optionIdx}
               />
             ))}
-          { (question === "What is your worst fear?" && optionList["worst_fear"]) && optionList["worst_fear"]
-            .map((item) => (
+          {question === "What is your worst fear?" &&
+            optionList["worst_fear"] &&
+            optionList["worst_fear"].map((item) => (
               <Option
                 key={item.optionIdx}
                 text={item.option}
@@ -139,41 +213,15 @@ export default function EventPlanning() {
           text="Add New +"
           onClick={() => {
             setOpenModal(true);
-            setOption("");
           }}
         />
       </div>
 
       <div className="button-container">
-        <Button
-          className={questionIdx !== 2 ? "nextButton" : "saveButton"}
-          text={questionIdx !== 2 ? "Next ->" : "Save"}
-          onClick={() => {
-            if (questionIdx < 2) {
-              setQuestionIdx(questionIdx + 1);
-            } else {
-              // save optionList to the backend
-              // optionList is the response of the client
-              // setQuestionIdx(0) is for resetting the questionIdx
-              setFinish(true);
-              localStorage.removeItem("idx");
-            }
-          }}
-        />
-
-        {questionIdx > 0 && (
-          <Button
-            className="prevButton"
-            text={"<- Prev"}
-            onClick={() => {
-              if (questionIdx > 0) {
-                setQuestionIdx(questionIdx - 1);
-              }
-            }}
-          />
-        )}
-
-        <Button className="cancelButton" text={"Cancel"} />
+        <NextButton />
+        {questionIdx > 0 && <PrevButton />}
+        {/* <Button className="cancelButton" text={"Cancel"} /> */}
+        <CancelButton />
       </div>
     </div>
   );

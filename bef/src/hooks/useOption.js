@@ -20,13 +20,13 @@ function useOption(finish) {
   //   }
   // }, []);
   useEffect(() => {
-    console.log("activityList: ", activityList);
+    // console.log("activityList: ", activityList);
     localStorage.setItem("activityList", JSON.stringify(activityList));
     
   }, [activityList]);
   
   useEffect(() => {
-    console.log("optionList: ", optionList);
+    // console.log("optionList: ", optionList);
 
     localStorage.setItem("optionList", JSON.stringify(optionList));
     

@@ -17,7 +17,9 @@ button {
     justify-content: center;
     align-items: center;
 }
-
+.button {
+    width: 600px;
+}
 label {
     cursor: pointer;
 }
@@ -75,6 +77,7 @@ label {
 }
 
 @media screen and (max-width: 600px) {
+    .button,
     button {
         padding: 20px 120px;
         width: 320px;
