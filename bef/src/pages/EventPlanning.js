@@ -43,7 +43,6 @@ export default function EventPlanning() {
   } = useOption(question);
   const [openModal, setOpenModal] = useState(false);
   const [finish, setFinish] = useState(false);
-  const [option, setOption] = useState("");
 
   const navigate = useNavigate();
   const generateKey = (pre) => {
@@ -152,8 +151,6 @@ export default function EventPlanning() {
       <Modal
         open={openModal}
         onClose={() => setOpenModal(false)}
-        option={option}
-        onTextChange={(text) => setOption(text)}
         addOption={addOption}
         addActivity={addActivity}
         question={question}
@@ -207,7 +204,6 @@ export default function EventPlanning() {
           text="Add New +"
           onClick={() => {
             setOpenModal(true);
-            setOption("");
           }}
         />
       </div>

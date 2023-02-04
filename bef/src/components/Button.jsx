@@ -2,14 +2,8 @@ import { useEffect, useState } from "react";
 import "./Button.css";
 import useWindowDimensions from "../hooks/useWindowDimension";
 
-function Button({ text, className = "", onClick, style, id }) {
-  const { width, height } = useWindowDimensions();
-  const [buttonText, setButtonText] = useState("Click me, please");
-  useEffect(() => {
-    if (text) {
-      setButtonText(text);
-    }
-  }, [text]);
+function Button({ text, className = "", onClick, style }) {
+  const { width} = useWindowDimensions();
 
   return (
     <button
@@ -17,10 +11,10 @@ function Button({ text, className = "", onClick, style, id }) {
       onClick={onClick}
       style={style}
     >
-      {(width <= 600 && buttonText.length > 30) || buttonText.length > 76 ? (
-        <label id="rollText">{buttonText}</label>
+      {(width <= 600 && text.length > 30) || text.length > 76 ? (
+        <label id="rollText">{text}</label>
       ) : (
-        <label>{buttonText}</label>
+        <label>{text}</label>
       )}
     </button>
   );
