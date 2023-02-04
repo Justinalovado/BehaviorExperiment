@@ -46,7 +46,7 @@ function PostActivity() {
       setFinish(true);
       // save optionList to firebase
       // optionList is the response of the client
-      const key = generateKey("the_new_design");
+      const key = `the new design-${generateKey()}`;
       storeOptionList(key, {
         ...optionList,
         activity: activityList.find((activity) => activity.selected === true)
@@ -92,8 +92,8 @@ function PostActivity() {
   //   }
   // }, [questionIdx]);
 
-  const generateKey = (pre) => {
-    return `${pre}_${new Date().getTime()}`;
+  const generateKey = () => {
+    return parseInt(`${new Date().getTime()}`, 10);
   };
 
   const text_question = [
@@ -168,10 +168,10 @@ function PostActivity() {
   };
 
   const slide_questions = [
-    "How anxious do you fell right now?",
+    "How anxious do you feel right now?",
     "How anxious were you at the peak anxiety level?",
     "How anxious did you feel at the end of activity?",
-    "How surprised do you fell about the outcome of the activity?",
+    "How surprised do you feel about the outcome of the activity?",
     "How strongly do you believe your worst fears happened during the activity?",
     "How strongly do you believe you were judged negatively during the activity?",
     "How strongly do you believe you appeared anxious during the activity?",
