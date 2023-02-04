@@ -29,20 +29,69 @@ import { useNavigate } from "react-router-dom";
 export default function EventPlanning() {
   const [questionIdx, setQuestionIdx] = useState(0);
   const question = useQuestion(questionIdx, "eventPlanning");
-  const { optionList, activityList, selectActivity, addOption, removeOption, removeActivity, addActivity } = useOption(question);
+  const {
+    optionList,
+    activityList,
+    selectActivity,
+    addOption,
+    removeOption,
+    removeActivity,
+    addActivity,
+  } = useOption(question);
   const [openModal, setOpenModal] = useState(false);
   const [finish, setFinish] = useState(false);
   const [option, setOption] = useState("");
-  
+
   const navigate = useNavigate();
   const generateKey = (pre) => {
-  
     return parseInt(`${new Date().getTime()}`, 10);
   };
   const handleStart = () => {
     navigate("/PreActivity");
   };
 
+// ---------------------------button components --------------------------- //
+  const NextButton = () => {
+    return (
+      <Button
+        className={questionIdx !== 2 ? "nextButton" : "saveButton"}
+        text={questionIdx !== 2 ? "Next ->" : "Save"}
+        onClick={() => {
+          if (activityList.length === 0) {
+            alert("Please add an activity");
+          }
+          else if(activityList.find((activity) => activity.selected === true) === undefined) {
+            alert("Please select an activity");
+          }
+          else {
+            if (questionIdx < 2) {
+              setQuestionIdx(questionIdx + 1);
+            } else {
+              // save optionList to the backend
+              // optionList is the response of the client
+              // setQuestionIdx(0) is for resetting the questionIdx
+              setFinish(true);
+              localStorage.removeItem("idx");
+            }
+          }
+        }}
+      />
+    );
+  };
+  const PrevButton = () => {
+    return (
+      <Button
+        className="prevButton"
+        text={"<- Prev"}
+        onClick={() => {
+          if (questionIdx > 0) {
+            setQuestionIdx(questionIdx - 1);
+          }
+        }}
+      />
+    );
+  };
+// ---------------------------button components --------------------------- //
   useEffect(() => {
     // load the question index from the local storage
     const idx = JSON.parse(localStorage.getItem("idx"));
@@ -99,7 +148,9 @@ export default function EventPlanning() {
       <div className="options">
         <div className="option-container">
           {/* filter() for getting answers to the corresponding questions */}
-          { question === "What is the activity" && activityList && activityList.map((item) => (
+          {question === "What is the activity" &&
+            activityList &&
+            activityList.map((item) => (
               <Option
                 key={item.optionIdx}
                 optionIdx={item.optionIdx}
@@ -113,8 +164,9 @@ export default function EventPlanning() {
                 }}
               />
             ))}
-          { (question === "What would be your likely safety behaviour" && optionList["safety_behaviour"]) && optionList["safety_behaviour"]
-            .map((item) => (
+          {question === "What would be your likely safety behaviour" &&
+            optionList["safety_behaviour"] &&
+            optionList["safety_behaviour"].map((item) => (
               <Option
                 key={item.optionIdx}
                 text={item.option}
@@ -123,8 +175,9 @@ export default function EventPlanning() {
                 optionIdx={item.optionIdx}
               />
             ))}
-          { (question === "What is your worst fear?" && optionList["worst_fear"]) && optionList["worst_fear"]
-            .map((item) => (
+          {question === "What is your worst fear?" &&
+            optionList["worst_fear"] &&
+            optionList["worst_fear"].map((item) => (
               <Option
                 key={item.optionIdx}
                 text={item.option}
@@ -144,35 +197,10 @@ export default function EventPlanning() {
         />
       </div>
 
+  
       <div className="button-container">
-        <Button
-          className={questionIdx !== 2 ? "nextButton" : "saveButton"}
-          text={questionIdx !== 2 ? "Next ->" : "Save"}
-          onClick={() => {
-            if (questionIdx < 2) {
-              setQuestionIdx(questionIdx + 1);
-            } else {
-              // save optionList to the backend
-              // optionList is the response of the client
-              // setQuestionIdx(0) is for resetting the questionIdx
-              setFinish(true);
-              localStorage.removeItem("idx");
-            }
-          }}
-        />
-
-        {questionIdx > 0 && (
-          <Button
-            className="prevButton"
-            text={"<- Prev"}
-            onClick={() => {
-              if (questionIdx > 0) {
-                setQuestionIdx(questionIdx - 1);
-              }
-            }}
-          />
-        )}
-
+        <NextButton />
+        {questionIdx > 0 && <PrevButton />}
         <Button className="cancelButton" text={"Cancel"} />
       </div>
     </div>
