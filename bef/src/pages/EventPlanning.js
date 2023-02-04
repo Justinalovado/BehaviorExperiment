@@ -53,6 +53,20 @@ export default function EventPlanning() {
     navigate("/PreActivity");
   };
 
+  useEffect(() => {
+    // load the question index from the local storage
+    const idx = JSON.parse(localStorage.getItem("idx"));
+    if (idx) {
+      setQuestionIdx(idx);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (questionIdx < 3) {
+      localStorage.setItem("idx", JSON.stringify(questionIdx));
+    }
+  }, [questionIdx]);
+
   // ---------------------------button components --------------------------- //
   const NextButton = () => {
     return (
@@ -105,19 +119,7 @@ export default function EventPlanning() {
     );
   };
   // ---------------------------button components --------------------------- //
-  useEffect(() => {
-    // load the question index from the local storage
-    const idx = JSON.parse(localStorage.getItem("idx"));
-    if (idx) {
-      setQuestionIdx(idx);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (questionIdx < 3) {
-      localStorage.setItem("idx", JSON.stringify(questionIdx));
-    }
-  }, [questionIdx]);
+  
 
   // finish is a boolean that determines whether the client has finished the activity or not
   // if finish is true, the client will see the finishMessage
