@@ -34,11 +34,13 @@ export default function EventPlanning() {
   const {
     optionList,
     activityList,
+    setOptionList,
     selectActivity,
     addOption,
     removeOption,
     removeActivity,
     addActivity,
+    selectOption,
   } = useOption(question);
   const [openModal, setOpenModal] = useState(false);
   const [finish, setFinish] = useState(false);
@@ -51,6 +53,10 @@ export default function EventPlanning() {
     navigate("/PreActivity");
   };
   
+  // useEffect(() => {
+  //   setOptionList({...optionList, safety_behaviour:optionList["safety_behaviour"].filter((item) => item.selected === true)})
+  // }, [finish]);
+
   useEffect(() => {
     // load the question index from the local storage
     const idx = JSON.parse(localStorage.getItem("idx"));
@@ -71,7 +77,10 @@ export default function EventPlanning() {
       <Button 
         className="cancelButton" 
         text="Cancel" 
-        onClick={() => navigate("/")} 
+        onClick={() => {
+          navigate("/");
+          setQuestionIdx(0);
+        }} 
       />
     );
   };
@@ -82,23 +91,48 @@ export default function EventPlanning() {
         className={questionIdx !== 2 ? "nextButton" : "saveButton"}
         text={questionIdx !== 2 ? "Next ->" : "Save"}
         onClick={() => {
-          if (activityList.length === 0) {
+          if (activityList.length === 0 || activityList.find((activity) => activity.selected === true) === undefined) {
             // alert("Please add an activity");
             MySwal.fire({
-              html: '<span style="font-family: "Inter";"><strong>Please add an activity</strong></span>',
+              html: '<span style="font-family: "Inter";"><strong>Please add/select an activity</strong></span>',
               icon: "error",
               confirmButtonText: "OK",
             });
-          } else if (
-            activityList.find((activity) => activity.selected === true) ===
-            undefined
-          ) {
-            MySwal.fire({
-              html: '<span style="font-family: "Inter";"><strong>Please select an activity</strong></span>',
-              icon: "error",
-              confirmButtonText: "OK",
-            });
-          } else {
+          }
+          else if (questionIdx === 1 && (optionList["safety_behaviour"].length === 0 || optionList["safety_behaviour"].find((option) => option.selected === true) === undefined)) {
+            if (optionList["safety_behaviour"].length === 0) {
+              MySwal.fire({
+                html: '<span style="font-family: "Inter";"><strong>Please add an option</strong></span>',
+                icon: "error",
+                confirmButtonText: "OK",
+              });
+            }
+            else if (optionList["safety_behaviour"].find((option) => option.selected === true) === undefined) {
+              MySwal.fire({
+                html: '<span style="font-family: "Inter";"><strong>Please select an option</strong></span>',
+                icon: "error",
+                confirmButtonText: "OK",
+              });
+            }
+          }
+          else if (questionIdx === 2 && (optionList["worst_fear"].length === 0 || optionList["safety_behaviour"].find((option) => option.selected === true) === undefined)) {
+            if (optionList["worst_fear"].length === 0) {
+              MySwal.fire({
+                html: '<span style="font-family: "Inter";"><strong>Please add an option</strong></span>',
+                icon: "error",
+                confirmButtonText: "OK",
+              });
+            }
+            else if (optionList["safety_behaviour"].find((option) => option.selected === true) === undefined) {
+              MySwal.fire({
+                html: '<span style="font-family: "Inter";"><strong>Please select an option</strong></span>',
+                icon: "error",
+                confirmButtonText: "OK",
+              });
+            }
+          }
+            
+          else {
             if (questionIdx < 2) {
               setQuestionIdx(questionIdx + 1);
             } else {
@@ -157,6 +191,7 @@ export default function EventPlanning() {
   return (
     <div className="EventPlanning">
       <Question question={question} />
+      <h3>Select your option/options</h3>
       <Modal
         open={openModal}
         onClose={() => setOpenModal(false)}
@@ -192,19 +227,39 @@ export default function EventPlanning() {
                 key={item.optionIdx}
                 text={item.option}
                 question={question}
+                style={{ cursor: "pointer" }}
                 remove={removeOption}
+                className={item.selected ? "selected" : ""}
                 optionIdx={item.optionIdx}
+                onClick={(e) => {
+                  selectOption(item.optionIdx, question);
+                  if (e.target.tagName === "LABEL") {
+                    e.target.parentElement.classList.toggle("selected");
+                  } else {
+                    e.target.classList.toggle("selected");
+                  }
+                }}
               />
             ))}
-          {question === "What is your worst fear?" &&
+          {question === "What is your worst fear" &&
             optionList["worst_fear"] &&
             optionList["worst_fear"].map((item) => (
               <Option
                 key={item.optionIdx}
                 text={item.option}
                 question={question}
+                style={{ cursor: "pointer" }}
                 remove={removeOption}
+                className={item.selected ? "selected" : ""}
                 optionIdx={item.optionIdx}
+                onClick={(e) => {
+                  selectOption(item.optionIdx, question);
+                  if (e.target.tagName === "LABEL") {
+                    e.target.parentElement.classList.toggle("selected");
+                  } else {
+                    e.target.classList.toggle("selected");
+                  }
+                }}
               />
             ))}
         </div>

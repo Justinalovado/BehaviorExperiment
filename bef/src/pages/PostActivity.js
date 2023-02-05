@@ -24,6 +24,7 @@ function PostActivity() {
     setOptionList,
     addOption,
     selectOption,
+    finalizeOption,
     addText,
     activityList,
   } = useOption(finish);
@@ -46,9 +47,10 @@ function PostActivity() {
       setFinish(true);
       // save optionList to firebase
       // optionList is the response of the client
-      const key = `the new design-${generateKey()}`;
+      const key = `20230205-${generateKey()}`;
       storeOptionList(key, {
         ...optionList,
+        safety_behaviour: optionList["safety_behaviour"].filter((item) => item.finalized === true),
         activity: activityList.find((activity) => activity.selected === true)
           .activity,
         metrics: {
@@ -84,14 +86,6 @@ function PostActivity() {
     }
   }, []);
 
-  // useEffect(() => {
-  //   if (questionIdx < MAXIDX) {
-  //     localStorage.setItem("idx", JSON.stringify(questionIdx));
-  //   } else {
-  //     localStorage.clear();
-  //   }
-  // }, [questionIdx]);
-
   const generateKey = () => {
     return parseInt(`${new Date().getTime()}`, 10);
   };
@@ -107,25 +101,28 @@ function PostActivity() {
       <div className="options">
         <div className="option-container">
           {optionList["safety_behaviour"] &&
-            optionList["safety_behaviour"].map((item) => (
-              <Button
-                key={item.optionIdx}
-                text={item.option}
-                className={item.selected ? "selected button" : "button"}
-                style={{ marginTop: "15px", maxWidth: "700px" }}
-                onClick={(e) => {
-                  // toggle the selected class
-                  // if the target is the label, toggle the parent element
-                  // otherwise toggle the target element
-                  selectOption(item.optionIdx);
-                  if (e.target.tagName === "LABEL") {
-                    e.target.parentElement.classList.toggle("selected");
-                  } else {
-                    e.target.classList.toggle("selected");
-                  }
-                }}
-              />
-            ))}
+            optionList["safety_behaviour"].map((item) => 
+                item.selected && (
+                  <Button
+                    key={item.optionIdx}
+                    text={item.option}
+                    className={item.finalized ? "selected button" : "button"}
+                    style={{ marginTop: "15px", maxWidth: "700px" }}
+                    onClick={(e) => {
+                    // toggle the finalized option
+                    // if the target is the label, toggle the parent element
+                    // otherwise toggle the target element
+                      finalizeOption(item.optionIdx);
+                      if (e.target.tagName === "LABEL") {
+                        e.target.parentElement.classList.toggle("selected");
+                      } else {
+                        e.target.classList.toggle("selected");
+                      }
+                  }}
+                  />
+                )
+              
+          )}
         </div>
         <Button
           className="addButton"
