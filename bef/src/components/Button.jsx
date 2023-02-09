@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import "./Button.css";
 import useWindowDimensions from "../hooks/useWindowDimension";
 

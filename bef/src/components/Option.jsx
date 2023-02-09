@@ -11,7 +11,8 @@ function Option({ text, className = "", remove, optionIdx, question, onClick, st
   
   
   return (
-    <div className={`${className} option`} style={style} id={optionIdx} onClick={onClick}>
+    // added fadeInDown animation that runs by default
+    <div className={`${className} fadeInDown option`} style={style} id={optionIdx} onClick={onClick}>
       {(width <= 600 && text.length > 25) || text.length > 45 ? (
         <label style={style} id="rollText">{text}</label>
       ) : (

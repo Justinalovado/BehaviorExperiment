@@ -1,9 +1,10 @@
 import React from "react";
 import "./Question.css";
 
-function Question({ question }) {
+function Question({ question, className, style }) {
+  
   return (
-    <div className="question">
+    <div className={`question ${className}`} style={style}>
       <h1>{question}</h1>
     </div>
   );
