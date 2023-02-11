@@ -92,11 +92,11 @@ export default function EventPlanning() {
         warningSign = '<span style="font-family: "Inter";"><strong>Please select an option</strong></span>'
       }
     }
-    else if (questionIdx === 2 && (optionList["worst_fear"].length === 0 || optionList["safety_behaviour"].find((option) => option.selected === true) === undefined)) {
+    else if (questionIdx === 2 && (optionList["worst_fear"].length === 0 || optionList["worst_fear"].find((option) => option.selected === true) === undefined)) {
       if (optionList["worst_fear"].length === 0) {
         warningSign = '<span style="font-family: "Inter";"><strong>Please add an option</strong></span>'
       }
-      else if (optionList["safety_behaviour"].find((option) => option.selected === true) === undefined) {
+      else if (optionList["worst_fear"].find((option) => option.selected === true) === undefined) {
         warningSign = '<span style="font-family: "Inter";"><strong>Please select an option</strong></span>'
       }
     }
