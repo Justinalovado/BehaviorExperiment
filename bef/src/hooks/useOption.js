@@ -62,7 +62,12 @@ function useOption(finish) {
           { option: option, optionIdx: optionIdx, selected: false },
         ]});
         break;
-
+      case "Out of all safety behavious how much did you use?":
+        setOptionList({...optionList, safety_behaviour:[
+          ...optionList["safety_behaviour"],
+          { option: option, optionIdx: optionIdx, selected: true, finalized: false },
+        ]});
+        break;
       default:
         break;
     }

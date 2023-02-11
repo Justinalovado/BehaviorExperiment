@@ -106,7 +106,7 @@ function PostActivity() {
                   <Button
                     key={item.optionIdx}
                     text={item.option}
-                    className={item.finalized ? "selected button" : "button"}
+                    className={item.finalized ? "fadeInDown selected button" : "fadeInDown button"}
                     style={{ marginTop: "15px", maxWidth: "700px" }}
                     onClick={(e) => {
                     // toggle the finalized option
@@ -204,7 +204,7 @@ function PostActivity() {
         option={option}
         onTextChange={(text) => setOption(text)}
         addOption={addOption}
-        question={"What would be your likely safety behaviour"}
+        question={"Out of all safety behavious how much did you use?"}
         optionIdx={generateKey(option)}
       />
       <Question question={question} />
