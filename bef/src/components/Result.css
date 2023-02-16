@@ -1,0 +1,8 @@
+.result-box{
+    font-family: "Alef";
+    color: white;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    max-width: 1020px;
+}

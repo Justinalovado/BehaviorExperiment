@@ -1,0 +1,43 @@
+.query-page{
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: #0093E9;
+    background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
+
+}
+
+@media (max-width:600px) {
+    .query-page form{
+        display: flex;
+        flex-direction: column;
+        margin: 5px;
+        gap: 15px;
+    }
+}
+@media (min-width:601px) {
+    .query-page form{
+        display: flex;
+        flex-direction: row;
+        margin: 5px;
+        gap: 15px;
+    }
+}
+
+
+
+.query-page form input{
+    border-radius: 2em;
+    text-align: left;
+    font-size: large;
+    text-indent: 1em;
+    padding-right: 1em;
+    min-height: 3em;
+}
+
+.query-page form button{
+    padding: 1em;
+}

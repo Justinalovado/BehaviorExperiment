@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { getOptionList } from "../firebase";
 import "firebase/database";
+import Result from "../components/Result";
+import "./Query.css"
 
 const Query = () => {
   const [key, setKey] = useState("");
@@ -29,7 +31,7 @@ const Query = () => {
 	}
 
   return (
-    <div>
+    <div className="query-page">
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -39,9 +41,10 @@ const Query = () => {
         />
         <button type="submit">Get Record</button>
       </form>
+      
       {loading && <p>Loading...</p>}
-      {error && <p>Error: {error}</p>}
-      {options && <p>{JSON.stringify(options)}</p>}
+      {error && <p>Error: {JSON.stringify(error)}</p>}
+			{options && <Result res={options} />}
     </div>
   );
 };

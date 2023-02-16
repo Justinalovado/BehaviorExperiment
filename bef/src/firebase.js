@@ -10,13 +10,12 @@ const { getAnalytics } = require("firebase/analytics");
 const firebaseConfig = {
   apiKey: "AIzaSyBenLljNoBmvXFQtTuUSFOHSKPR4o72l84",
   authDomain: "behavioural-experiment.firebaseapp.com",
-  databaseURL:
-    "https://behavioural-experiment-default-rtdb.asia-southeast1.firebasedatabase.app",
+  databaseURL: "https://behavioural-experiment-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "behavioural-experiment",
   storageBucket: "behavioural-experiment.appspot.com",
   messagingSenderId: "807826779185",
   appId: "1:807826779185:web:4254b9dd79a26e84fcb910",
-  measurementId: "G-5XRWMN1JCB",
+  measurementId: "G-5XRWMN1JCB"
 };
 
 // Initialize Firebase
@@ -31,7 +30,7 @@ export default function storeOptionList(path, optionList) {
 
 export function getOptionList(path) {
   const dbRef = ref(getDatabase());
-
+  console.log(dbRef)
   return get(child(dbRef, path)).then((snapshot) => {
     if (snapshot.exists()) {
       console.log("data retrieved")
@@ -40,6 +39,7 @@ export function getOptionList(path) {
       return Promise.reject("No data found");
     }
   }).catch((error) => {
+    console.log(error)
     return Promise.reject(error);
   });
 }
