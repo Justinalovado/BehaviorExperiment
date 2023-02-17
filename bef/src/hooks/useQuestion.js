@@ -5,7 +5,7 @@ function useQuestion(idx, page) {
     eventPlanning: [
       "What is the activity",
       "What would be your likely safety behaviour",
-      "What is your worst fear?",
+      "What is your worst fear",
     ],
     postActivity: [
       "Out of all safety behavious how much did you use?",

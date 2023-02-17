@@ -34,11 +34,13 @@ export default function EventPlanning() {
   const {
     optionList,
     activityList,
+    setOptionList,
     selectActivity,
     addOption,
     removeOption,
     removeActivity,
     addActivity,
+    selectOption,
   } = useOption(question);
   const [openModal, setOpenModal] = useState(false);
   const [finish, setFinish] = useState(false);
@@ -51,6 +53,12 @@ export default function EventPlanning() {
     navigate("/PreActivity");
   };
   
+  // commented out because it is not used
+  // const [show, setShow] = useState(false);
+  // useEffect(() => {
+  //   setShow(true);
+  // }, []);
+
   useEffect(() => {
     // load the question index from the local storage
     const idx = JSON.parse(localStorage.getItem("idx"));
@@ -65,13 +73,74 @@ export default function EventPlanning() {
     }
   }, [questionIdx]);
 
+  const handleNext = () => {
+    let warningSign = ''
+    if (activityList.length === 0 || activityList.find((activity) => activity.selected === true) === undefined) {
+      // alert("Please add an activity");
+      if (activityList.length === 0) {
+        warningSign = '<span style="font-family: "Inter";"><strong>Please add an activity</strong></span>'
+      }
+      else {
+        warningSign = '<span style="font-family: "Inter";"><strong>Please select an activity</strong></span>'
+      }
+    }
+    else if (questionIdx === 1 && (optionList["safety_behaviour"].length === 0 || optionList["safety_behaviour"].find((option) => option.selected === true) === undefined)) {
+      if (optionList["safety_behaviour"].length === 0) {
+        warningSign = '<span style="font-family: "Inter";"><strong>Please add an option</strong></span>'
+      }
+      else if (optionList["safety_behaviour"].find((option) => option.selected === true) === undefined) {
+        warningSign = '<span style="font-family: "Inter";"><strong>Please select an option</strong></span>'
+      }
+    }
+    else if (questionIdx === 2 && (optionList["worst_fear"].length === 0 || optionList["worst_fear"].find((option) => option.selected === true) === undefined)) {
+      if (optionList["worst_fear"].length === 0) {
+        warningSign = '<span style="font-family: "Inter";"><strong>Please add an option</strong></span>'
+      }
+      else if (optionList["worst_fear"].find((option) => option.selected === true) === undefined) {
+        warningSign = '<span style="font-family: "Inter";"><strong>Please select an option</strong></span>'
+      }
+    }
+    if (warningSign !== '') {
+      MySwal.fire({
+        html: warningSign,
+        confirmButtonText: "OK",
+        confirmButtonColor: "#FFC300",
+        background: "#FFFFFF",
+        width: "400px",
+        padding: "20px",
+        
+      });
+    }
+    else {
+      if (questionIdx < 2) {
+        // commented code is for the heading question animation 
+        // setShow(false);
+        // setTimeout(() => {
+        //   setQuestionIdx(questionIdx + 1);
+        //   setShow(true);
+        // }, 100);
+        setQuestionIdx(questionIdx + 1);
+        
+      } else {
+        // save optionList to the backend
+        // optionList is the response of the client
+        // setQuestionIdx(0) is for resetting the questionIdx
+        setFinish(true);
+        localStorage.removeItem("idx");
+      }
+    }
+  }
   // ---------------------------button components --------------------------- //
   const CancelButton = () => {
     return (
       <Button 
         className="cancelButton" 
         text="Cancel" 
-        onClick={() => navigate("/")} 
+        onClick={() => {
+          navigate("/");
+          setQuestionIdx(0);
+          localStorage.removeItem("idx");
+        }} 
       />
     );
   };
@@ -81,35 +150,7 @@ export default function EventPlanning() {
       <Button
         className={questionIdx !== 2 ? "nextButton" : "saveButton"}
         text={questionIdx !== 2 ? "Next ->" : "Save"}
-        onClick={() => {
-          if (activityList.length === 0) {
-            // alert("Please add an activity");
-            MySwal.fire({
-              html: '<span style="font-family: "Inter";"><strong>Please add an activity</strong></span>',
-              icon: "error",
-              confirmButtonText: "OK",
-            });
-          } else if (
-            activityList.find((activity) => activity.selected === true) ===
-            undefined
-          ) {
-            MySwal.fire({
-              html: '<span style="font-family: "Inter";"><strong>Please select an activity</strong></span>',
-              icon: "error",
-              confirmButtonText: "OK",
-            });
-          } else {
-            if (questionIdx < 2) {
-              setQuestionIdx(questionIdx + 1);
-            } else {
-              // save optionList to the backend
-              // optionList is the response of the client
-              // setQuestionIdx(0) is for resetting the questionIdx
-              setFinish(true);
-              localStorage.removeItem("idx");
-            }
-          }
-        }}
+        onClick={handleNext}
       />
     );
   };
@@ -120,6 +161,12 @@ export default function EventPlanning() {
         text={"<- Prev"}
         onClick={() => {
           if (questionIdx > 0) {
+            // commented code is for the heading question animation
+            // setShow(false);
+            // setTimeout(() => {
+            //   setQuestionIdx(questionIdx - 1);
+            //   setShow(true);
+            // }, 100);
             setQuestionIdx(questionIdx - 1);
           }
         }}
@@ -156,7 +203,18 @@ export default function EventPlanning() {
 
   return (
     <div className="EventPlanning">
-      <Question question={question} />
+      <div className="questionContainer">
+        {/* [U+200E] is an invisible character*/}
+        {/* <Question question="‎" style={{display: show ? "none" : "block"}} />  */}
+        {/* the above question tag is a dummy question tag to maintain the layout structure*/}
+        <Question 
+          question={question}
+        />
+        <Question 
+          question="Select your option/options" 
+          style={{ fontSize: "0.67em"}} 
+        /> 
+      </div>
       <Modal
         open={openModal}
         onClose={() => setOpenModal(false)}
@@ -176,7 +234,7 @@ export default function EventPlanning() {
                 key={item.optionIdx}
                 optionIdx={item.optionIdx}
                 text={item.activity}
-                style={{ cursor: "pointer" }}
+                style={{ cursor: "pointer"}}
                 className={item.selected ? "selected" : ""}
                 remove={removeActivity}
                 question={question}
@@ -192,19 +250,39 @@ export default function EventPlanning() {
                 key={item.optionIdx}
                 text={item.option}
                 question={question}
+                style={{ cursor: "pointer" }}
                 remove={removeOption}
+                className={item.selected ? "selected" : ""}
                 optionIdx={item.optionIdx}
+                onClick={(e) => {
+                  selectOption(item.optionIdx, question);
+                  if (e.target.tagName === "LABEL") {
+                    e.target.parentElement.classList.toggle("selected");
+                  } else {
+                    e.target.classList.toggle("selected");
+                  }
+                }}
               />
             ))}
-          {question === "What is your worst fear?" &&
+          {question === "What is your worst fear" &&
             optionList["worst_fear"] &&
             optionList["worst_fear"].map((item) => (
               <Option
                 key={item.optionIdx}
                 text={item.option}
                 question={question}
+                style={{ cursor: "pointer" }}
                 remove={removeOption}
+                className={item.selected ? "selected" : ""}
                 optionIdx={item.optionIdx}
+                onClick={(e) => {
+                  selectOption(item.optionIdx, question);
+                  if (e.target.tagName === "LABEL") {
+                    e.target.parentElement.classList.toggle("selected");
+                  } else {
+                    e.target.classList.toggle("selected");
+                  }
+                }}
               />
             ))}
         </div>

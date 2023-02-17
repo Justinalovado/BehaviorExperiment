@@ -10,7 +10,7 @@ function useOption(finish) {
   const [activityList, setActivityList] = useState(
     JSON.parse(localStorage.getItem("activityList") || "[]")
   );
-
+  
   // localStorage used to store items on page refresh
   // ----------------localStorage part--------------------- //
   // useEffect(() => {
@@ -52,17 +52,22 @@ function useOption(finish) {
       case "What would be your likely safety behaviour":
         setOptionList({...optionList, safety_behaviour:[
           ...optionList["safety_behaviour"],
-          { option: option, optionIdx: optionIdx, selected: false },
+          { option: option, optionIdx: optionIdx, selected: false, finalized: false },
         ]});
         break;
         
-      case "What is your worst fear?":
+      case "What is your worst fear":
         setOptionList({...optionList, worst_fear:[
           ...optionList["worst_fear"],
           { option: option, optionIdx: optionIdx, selected: false },
         ]});
         break;
-
+      case "Out of all safety behavious how much did you use?":
+        setOptionList({...optionList, safety_behaviour:[
+          ...optionList["safety_behaviour"],
+          { option: option, optionIdx: optionIdx, selected: true, finalized: false },
+        ]});
+        break;
       default:
         break;
     }
@@ -85,7 +90,7 @@ function useOption(finish) {
       case "What would be your likely safety behaviour":
         setOptionList({...optionList, safety_behaviour: optionList["safety_behaviour"].filter((item) => item.optionIdx !== currentIdx)});
         break;
-      case "What is your worst fear?":
+      case "What is your worst fear":
         setOptionList({...optionList, worst_fear: optionList["worst_fear"].filter((item) => item.optionIdx !== currentIdx)});
         break;
       default:
@@ -106,23 +111,37 @@ function useOption(finish) {
     });
     setActivityList(newList);
   };
-  const selectOption = (optionIdx) => {
-    // const newList = optionList["safety_behaviour"].map((item) => {
-    //   if (item.optionIdx === optionIdx) {
-    //     return { ...item, selected: !item.selected };
-    //   }
-    //   return item;
-    // });
-    const newList = {...optionList, safety_behaviour: optionList["safety_behaviour"].map((item) => {
+  const selectOption = (optionIdx, question) => {
+    if (question === "What is your worst fear") {
+      const newList = optionList["worst_fear"].map((item) => {
+        if (item.optionIdx === optionIdx) {
+          item.selected = !item.selected;
+        }
+        return item;
+      });
+      setOptionList({...optionList, worst_fear: newList});
+      localStorage.setItem("optionList", JSON.stringify(newList));
+    }
+    else if (question === "What would be your likely safety behaviour") {
+      const newList = optionList["safety_behaviour"].map((item) => {
+        if (item.optionIdx === optionIdx) {
+          item.selected = !item.selected;
+        }
+        return item;
+      });
+      setOptionList({...optionList, safety_behaviour: newList});
+      localStorage.setItem("optionList", JSON.stringify(newList));
+    }
+  };
+
+  const finalizeOption = (optionIdx) => {
+    setOptionList({...optionList, safety_behaviour: optionList["safety_behaviour"].map((item) => {
       if (item.optionIdx === optionIdx) {
-        return { ...item, selected: !item.selected };
+        item.finalized = !item.finalized;
       }
       return item;
-    }
-    )};
-    setOptionList(newList);
-    localStorage.setItem("optionList", JSON.stringify(newList));
-  };
+    })})
+  }
 
   return {
     optionList,
@@ -135,6 +154,7 @@ function useOption(finish) {
     addText,
     selectActivity,
     addActivity,
+    finalizeOption,
   };
 }
 
