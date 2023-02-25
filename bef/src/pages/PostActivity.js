@@ -1,3 +1,4 @@
+/* eslint-disable react/style-prop-object */
 import React from "react";
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
@@ -15,6 +16,10 @@ import "./PostActivity.css";
 // optionList will be sent at the end as the response of the client (backend)
 // PostActivity will not show up if optionList is empty or null
 const MAXIDX = 5;
+const generateKey = () => {
+  return parseInt(`${new Date().getTime()}`, 10);
+};
+const key = `${generateKey()}`;
 function PostActivity() {
   const [questionIdx, setQuestionIdx] = useState(0);
   const question = useQuestion(questionIdx, "postActivity");
@@ -35,9 +40,17 @@ function PostActivity() {
 
   function Lastpage() {
     localStorage.removeItem("idx");
+    document.addEventListener("keydown", function(event) {
+      if (event.code === "F5") {
+        event.preventDefault();
+        navigate("/");
+      }
+    });
     return (
-      <div className="PostActivity">
-        <Question question={"Thank you for your participation"} />
+      <div className="PostActivity" style={{justifyContent: "center"}}>
+        <Question className="fadeInDown" question={"Thank you for your participation"} />
+        <Question className="fadeInDown" question={`This is your key: ${key}`} />
+        <Button className="backToMenuButton fadeInDown" text="Back to Menu" onClick={() => navigate("/")} />
       </div>
     );
   }
@@ -47,7 +60,6 @@ function PostActivity() {
       setFinish(true);
       // save optionList to firebase
       // optionList is the response of the client
-      const key = `20230205-${generateKey()}`;
       storeOptionList(key, {
         ...optionList,
         safety_behaviour: optionList["safety_behaviour"].filter((item) => item.finalized === true),
@@ -85,11 +97,7 @@ function PostActivity() {
       setQuestionIdx(idx);
     }
   }, []);
-
-  const generateKey = () => {
-    return parseInt(`${new Date().getTime()}`, 10);
-  };
-
+  
   const text_question = [
     "Who did you interact with during the activity",
     "Compared to the initial predictions, what actually happened?",
