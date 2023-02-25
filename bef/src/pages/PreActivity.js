@@ -49,7 +49,7 @@ function PreActivity() {
     if (Part > 0) {
       setPart(Part - 1);
     } else {
-      navigate("/");
+      navigate("/EventPlanning");
     }
   };
 
