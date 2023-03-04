@@ -17,6 +17,7 @@ export default function Landing() {
   return (
     <div className="landing">
       <h1>Welcome</h1>
+      <h2>Experience Inner Peace through Behavioral Experiment</h2>
       <div className="btn-container">
         <button onClick={warpBEF}>About Behavioural Experiment</button>
         <button onClick={warpPlanning}>Start Activity</button>
