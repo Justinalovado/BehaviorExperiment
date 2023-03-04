@@ -59,8 +59,10 @@ export default function Result(props) {
   return (
     <div className='result-box'>
       {/* {JSON.stringify(res)} */}
-      <h2>activity: {activity}</h2>
-      <Barchart values={anx_feeling} label={anx_feeling_lab} />
+      <div className="first-item">
+        <h2>activity: {activity}</h2>
+        <Barchart values={anx_feeling} label={anx_feeling_lab} />
+      </div>
       {Object.entries(pred_act).map(([key, val]) => (
         <div className='stat-section'>
           <h3>{key}</h3>
