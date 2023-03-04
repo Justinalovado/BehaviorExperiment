@@ -5,6 +5,7 @@ import PostActivity from './pages/PostActivity'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import PreActivity from './pages/PreActivity';
 import Landing from './pages/Landing';
+import About from './pages/About'
 import Query from './pages/Query';
 
 
@@ -18,6 +19,7 @@ function App() {
         <Route path='/EventPlanning' element={<EventPlanning />} />
         <Route path='/PreActivity' element={<PreActivity />} />
         <Route path="/PostActivity" element={<PostActivity />} />
+        <Route path="/About" element={<About />} />
         <Route path='*' element={<h1>Error404</h1>} />
       </Routes>
     </Router>
