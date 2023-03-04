@@ -2,6 +2,8 @@
 import React from "react";
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 import storeOptionList from "../firebase";
 import useQuestion from "../hooks/useQuestion";
@@ -162,9 +164,23 @@ function PostActivity() {
       />
     </div>
   );
-
+  
+  const MySwal = withReactContent(Swal);
   const handle_next = () => {
     // optionIdx is (question + key) not (answer + key)
+    const warningSign = '<span style="font-family: "Inter";"><strong>Please select an activity</strong></span>'
+    if (optionList["safety_behaviour"].find((activity) => activity.finalized === true) === undefined) {
+      MySwal.fire({
+        html: warningSign,
+        confirmButtonText: "OK",
+        confirmButtonColor: "#FFC300",
+        background: "#FFFFFF",
+        width: "400px",
+        padding: "20px",
+        
+      });
+      return;
+    }
     if (text_question.includes(question)) {
       addText(document.getElementById(question).value, questionIdx);
       document.getElementsByTagName("textarea").value = "";
@@ -211,7 +227,9 @@ function PostActivity() {
       })}
     </div>
   );
-
+  const guide = (
+    <Question question="Select your option/options" style={{ fontSize: "0.67em"}} />
+  )
   if (finish) {
     return <Lastpage key={key}/>;
   }
@@ -231,6 +249,8 @@ function PostActivity() {
 
       {text_question.includes(question) && txt_box}
 
+      {question === "Out of all safety behavious how much did you use?" && guide}
+      
       {question === "Out of all safety behavious how much did you use?" &&
         safety_behvs}
 
