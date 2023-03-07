@@ -4,10 +4,12 @@ import Barchart from './Barchart'
 
 export default function Result(props) {
 	const res = props.res
+  const disp_mode = props.mode
   const activity = res.hasOwnProperty("activity") ? res.activity : null;
   const mets = res.hasOwnProperty("metrics") ? res.metrics : null;
   const safe_behv = res.hasOwnProperty("safety_behaviour") ? res.safe_behv : null;
   const fear = res.hasOwnProperty("worst_fear")? res.worst_fear:null;
+
 
   let anx_feeling = [mets["met-1"], mets["met-8"], mets["met-9"]]
   let anx_feeling_lab = ["Before", "During", "After"]
@@ -55,18 +57,37 @@ export default function Result(props) {
   //   const found = sorted.find(([key]) => key === metKey);
   //   return found ? found[1] : 50;
   // });
-
-  return (
-    <div className='result-box'>
-      {/* {JSON.stringify(res)} */}
-      <h2>activity: {activity}</h2>
+  const disp = [
+    // graph display
+    (<div>
       <Barchart values={anx_feeling} label={anx_feeling_lab} />
       {Object.entries(pred_act).map(([key, val]) => (
         <div className='stat-section'>
           <h3>{key}</h3>
           <Barchart values={val} label={pair_label}/>
-        </div>
+         </div>
       ))}
+    </div>),
+    // text display
+    (<div className='text-disp-box'>
+      <h3>Change of percepted anxiety</h3>
+      <p>{anx_feeling[0]}~{anx_feeling[1]}~{anx_feeling[2]}</p>
+      {Object.entries(pred_act).map(([key, val]) => (
+        <div className='stat-section'>
+          <h3>{key}</h3>
+          <p>{val[0]}~{val[1]}</p>
+         </div>
+      ))}
+    </div>)
+  ]
+
+
+
+  return (
+    <div className='result-box'>
+      {/* {JSON.stringify(res)} */}
+      <h2>activity: {activity}</h2>
+      {disp[disp_mode]}
     </div>
   )
 };

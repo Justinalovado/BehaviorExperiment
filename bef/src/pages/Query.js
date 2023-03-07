@@ -9,7 +9,7 @@ const Query = () => {
   const [options, setOptions] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-
+  const [mode, setMode] = useState(1);//0=graph, 1=text
   const handleChange = (event) => {
     setKey(event.target.value);
   };
@@ -44,9 +44,12 @@ const Query = () => {
       
       {loading && <p>Loading...</p>}
       {error && <p>Error: {JSON.stringify(error)}</p>}
-			{options && <Result res={options} />}
+			{options && <Result res={options} mode={mode}/>}
     </div>
   );
 };
 
 export default Query;
+
+
+/// write a function that count to 10?

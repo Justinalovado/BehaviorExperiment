@@ -5,4 +5,12 @@
     flex-direction: column;
     overflow-y: scroll;
     max-width: 1020px;
+    
+}
+
+.result-box .text-disp-box{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    text-align: center;
 }
