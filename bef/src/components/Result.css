@@ -1,8 +1,10 @@
 .result-box{
     font-family: "Alef";
     color: white;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+    
     overflow-y: scroll;
     max-width: 1020px;
     
@@ -13,4 +15,11 @@
     flex-direction: column;
     align-content: center;
     text-align: center;
+}
+
+@media (max-width: 750px) {
+  .result-box {
+    display: flex;
+    flex-direction: column;
+  }
 }
